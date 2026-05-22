@@ -1,0 +1,53 @@
+\section{Thiết kế hệ thống}
+
+\subsection{Tổng quan hệ thống}
+Để nâng cao hiệu năng thời gian thực và tối ưu hóa tài nguyên phần cứng, hệ thống đã được tái cấu trúc từ mô hình xử lý tập trung đơn bo mạch sang kiến trúc mạng phân tán sử dụng \textbf{hai bo mạch lập trình Yolo UNO (ESP32-S3)} hoạt động song song. Sự cải tiến này tạo ra sự khác biệt và đổi mới chức năng lớn hơn 30\% so với mã nguồn gốc của dự án. Hai bo mạch được phân tách nhiệm vụ rõ rệt và giao tiếp không dây với nhau thông qua giao thức truyền thông nội bộ tốc độ cao:
+\begin{itemize}
+    \item \textbf{Yolo UNO Khối 1 (Sensor \& Processing Node):} Hoạt động ở cấu hình phần cứng chuyên dụng, đảm nhận việc thu thập dữ liệu thô từ cảm biến DHT20, thực thi luồng thuật toán Trí tuệ nhân tạo biên TinyML và kết nối Wi-Fi diện rộng để đồng bộ dữ liệu lên đám mây CoreIOT.
+    \item \textbf{Yolo UNO Khối 2 (Display \& Actuator Node):} Chịu trách nhiệm tiếp nhận gói tin trạng thái từ khối 1 để điều phối các tác vụ hiển thị, cảnh báo ngoại vi (LED đơn, dải LED RGB NeoPixel, màn hình LCD I2C) và quản lý máy chủ Web Server phục vụ điều khiển cục bộ từ người dùng.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.95\textwidth]{so_do_khoi_2_board.png}
+    \caption{Sơ đồ kiến trúc phân tán đa nút sử dụng hai bo mạch Yolo UNO dưới sự điều phối của FreeRTOS}
+    \label{fig:arch_2_board}
+\end{figure}
+
+\subsection{Khối 1: Hiển thị LED + LCD, Ngoại vi}
+Khối chức năng này được triển khai toàn bộ trên \textbf{Yolo UNO thứ hai (Display Node)}. Thay vì đọc trực tiếp cảm biến, bo mạch này sở hữu một tác vụ nền FreeRTOS liên tục lắng nghe kênh truyền thông nội bộ để nhận gói tin chứa thông số môi trường và kết quả phân loại từ Yolo UNO 1, sau đó sử dụng các cơ chế đồng bộ hóa thời gian thực để cập nhật ngoại vi mà không sử dụng bất kỳ biến toàn cục nào:
+\begin{itemize}
+    \item \textbf{Mạch điều khiển LED đơn (Task 1):} Chờ tín hiệu giải phóng từ \textit{Binary Semaphore} khi có luồng dữ liệu mới chuyển tới. Dựa vào giá trị nhiệt độ nhận được, tác vụ điều khiển LED nhấp nháy theo 3 dải chu kỳ/tần số cảnh báo riêng biệt.
+    \item \textbf{Mạch điều khiển LED NeoPixel (Task 2):} Sử dụng cơ chế đồng bộ hóa bằng \textit{Semaphore}. Tác vụ ánh xạ dải độ ẩm nhận được thành 3 mẫu màu sắc (Đỏ, Xanh lá, Xanh dương) chỉ thị trực quan trên dải LED RGB NeoPixel.
+    \item \textbf{Mạch hiển thị LCD I2C (Task 3):} Tác vụ chiếm quyền tuyến bus I2C thông qua \textit{Mutex} (semaphore loại trừ tương hỗ), thực hiện xuất ra màn hình LCD các thông số môi trường thực tế và tự động chuyển đổi giữa 3 giao diện trạng thái cảnh báo: ``NORMAL'', ``WARNING'', và ``CRITICAL''.
+\end{itemize}
+
+\subsection{Khối 2: Webserver + Điều khiển cục bộ}
+Khối truyền thông điều khiển cục bộ được cấu hình tích hợp trên \textbf{Yolo UNO thứ hai} nhằm cung cấp giao diện quản trị tại chỗ và tối ưu hóa tốc độ phản hồi lệnh chấp hành ngoại vi:
+\begin{itemize}
+    \item \textbf{Máy chủ Web (Task 4):} Yolo UNO 2 kích hoạt chip Wi-Fi ở chế độ Điểm truy cập (Access Point Mode) để phát ra một mạng nội bộ độc lập. Giao diện WebUI được thiết kế hiện đại với công nghệ \textbf{WebSocket}, thay thế cho các phương thức HTTP POST/GET truyền thống. Giao thức WebSocket cho phép truyền tải trực tiếp các gói tin JSON, hiển thị thông số thời gian thực mà không cần tải lại trang, đồng thời cho phép người dùng cấu hình động thêm/xóa thiết bị hiển thị.
+    \item \textbf{Giao tiếp đồng bộ lệnh:} Hệ thống duy trì cấu trúc dữ liệu gói tin để chuyển tiếp đồng bộ trạng thái lệnh điều khiển cục bộ này ngược trở lại Yolo UNO 1 nhằm quản lý tập trung trên mạng lưới khi cần thiết.
+\end{itemize}
+
+\subsection{Khối 3: CoreIOT}
+Khối tương tác đám mây diện rộng được thiết lập độc quyền trên \textbf{Yolo UNO thứ nhất (Sensor Node)} để giảm thiểu băng thông và độ trễ truyền tải:
+\begin{itemize}
+    \item \textbf{Cơ chế kết nối (Task 6):} Do Yolo UNO 1 kết nối trực tiếp với cảm biến phần cứng DHT20, tác vụ mạng trên bo mạch này sẽ cấu hình Wi-Fi ở chế độ Trạm (Station - STA) để liên kết vào mạng bộ định tuyến Internet.
+    \item \textbf{Xuất bản dữ liệu Cloud:} Sau khi lấy mẫu nhiệt độ và độ ẩm, tác vụ đóng gói dữ liệu thành cấu trúc gói tin JSON. Sử dụng thư viện ThingsBoard MQTT cùng mã định danh thiết bị hợp lệ (Token), khối này thực hiện xuất bản (publish) liên tục dữ liệu viễn trắc (Telemetry) lên máy chủ CoreIOT (\url{https://app.coreiot.io/}).
+\end{itemize}
+
+\subsection{Khối 4: TinyML}
+Khối Trí tuệ nhân tạo nhúng được phân bổ chạy trên \textbf{Yolo UNO thứ nhất}, tận dụng toàn bộ dung lượng RAM và chu kỳ CPU lõi kép để xử lý tính toán học sâu mà không làm ảnh hưởng đến tiến trình điều khiển hiển thị ngoại vi của Yolo UNO 2.
+
+\subsubsection{Kiến trúc xử lý và Thiết kế mô hình}
+Kiến trúc TinyML sử dụng thư viện TensorFlow Lite Micro thực thi tại biên. Mô hình được thiết kế dưới dạng cấu trúc mạng nơ-ron lan truyền thẳng tối giản. Dữ liệu thô gồm nhiệt độ và độ ẩm từ DHT20 được nạp trực tiếp vào mô hình dưới định dạng \textbf{số thực gốc (\texttt{float32})}, bỏ qua bước lượng tử hóa (\texttt{int8}) và chuẩn hóa phức tạp nhằm tối ưu chu trình suy luận. Đặc biệt, hệ thống tự động chạy kịch bản kiểm thử 50 mẫu (Test Dataset) để trích xuất chỉ số \textit{Accuracy, Precision, Recall} ngay khi vừa khởi động.
+
+\subsubsection{Triển khai mô hình trên ESP32 S3}
+Mô hình sau khi huấn luyện được nhúng vào mã nguồn Yolo UNO 1 dưới dạng một mảng byte hằng số C. Bộ thông dịch cấp phát một vùng không gian tĩnh cố định có kích thước \textbf{8KB} gọi là \textit{Tensor Arena} trên RAM của chip để thực thi, ngăn ngừa hoàn toàn hiện tượng sập hệ thống do phân mảnh vùng nhớ (Heap fragmentation).
+
+\subsubsection{Tích hợp với FreeRTOS và Luồng hoạt động}
+Tiến trình suy luận của AI được đóng gói thành một FreeRTOS Task độc lập (Task 5) trên Yolo UNO 1. 
+Luồng xử lý diễn ra tuần tự: Khởi tạo \& Kiểm thử tĩnh $\rightarrow$ Đọc cảm biến phần cứng qua Mutex $\rightarrow$ Thực thi suy luận toán học trên Tensor Arena $\rightarrow$ Trích xuất hệ số bất thường (Anomaly Score) $\rightarrow$ Đóng gói kết quả cùng dữ liệu cảm biến gửi không dây sang Yolo UNO 2 để kích hoạt các kịch bản cảnh báo ngoại vi.
+
+\subsection{Khối 5: Định danh thiết bị và Bảo mật bằng MAC Address}
+Để xây dựng cơ chế xác thực nút tin cậy trong mô hình mạng IoT phân tán, cả hai bo mạch Yolo UNO đều được tích hợp module định danh thông qua địa chỉ vật lý toàn cầu MAC Address trích xuất từ phân vùng ROM của chip Wi-Fi. Yolo UNO 2 chỉ chấp nhận và xử lý các gói tin dữ liệu cảm biến gửi tới khi chuỗi MAC Address của thiết bị phát khớp chính xác với địa chỉ MAC của Yolo UNO 1 đã được cấu hình tĩnh (White-list) trong mã nguồn. Cơ chế này tạo nên hàng rào bảo mật an toàn chống lại các tác nhân giả mạo thiết bị trong mạng nội bộ. Đồng thời, địa chỉ MAC/IP cũng được Yolo UNO 1 lấy làm thuộc tính định danh (Device Attribute) gửi lên CoreIOT nhằm tăng cường tính năng quản lý thiết bị trên đám mây.

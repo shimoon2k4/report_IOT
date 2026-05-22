@@ -1,0 +1,27 @@
+\section{Giới thiệu}
+
+\subsection{Lý do chọn đề tài}
+Trong sự phát triển không ngừng của Internet vạn vật (IoT), việc xây dựng các hệ thống nhúng đòi hỏi khả năng xử lý nhiều tác vụ đồng thời với độ trễ thấp và độ chính xác cao. Để đáp ứng yêu cầu khắt khe này, Hệ điều hành thời gian thực (RTOS) trở thành một công cụ không thể thiếu đối với các kỹ sư và lập trình viên. Việc ứng dụng RTOS giúp tối ưu hóa tài nguyên phần cứng, đồng thời quản lý hiệu quả các luồng dữ liệu liên tục từ cảm biến.
+
+Xuất phát từ nhu cầu nắm bắt các kỹ thuật lập trình nhúng nâng cao, nhóm đã quyết định thực hiện đề tài dựa trên việc sửa đổi và mở rộng dự án nền tảng YoloUNO\_PlatformIO - RTOS\_Project. Đề tài mang lại cơ hội thực hành trực tiếp các kỹ thuật đồng bộ hóa tác vụ bằng tín hiệu (signals) và semaphore, loại bỏ hoàn toàn việc sử dụng các biến toàn cục thiếu an toàn. Đồng thời, dự án còn tích hợp các công nghệ hiện đại như Trí tuệ nhân tạo tại biên (TinyML) và giao tiếp đám mây (Cloud Server), tạo tiền đề vững chắc cho việc phát triển các sản phẩm IoT phức tạp trong thực tế.
+
+\subsection{Bối cảnh ứng dụng thực tế}
+Các hệ thống nhúng hiện đại không chỉ dừng lại ở việc thu thập dữ liệu đơn thuần mà đang tiến tới khả năng "tự suy nghĩ" và phân tích dữ liệu ngay tại nơi thu thập (Edge Computing). Trong bối cảnh đó, sự kết hợp giữa RTOS và TinyML mở ra khả năng tạo ra các thiết bị thông minh có thể nhận diện môi trường, dự đoán sự cố và phản hồi tức thì mà không cần phụ thuộc hoàn toàn vào máy chủ trung tâm.
+
+Mô hình dự án này phản ánh trực tiếp cấu trúc của một hệ thống IoT công nghiệp cỡ nhỏ: từ lớp cảm nhận (thu thập nhiệt độ, độ ẩm), lớp xử lý cục bộ (giao diện Web AP, xử lý TinyML, cảnh báo qua LCD/LED), cho đến lớp mạng và đám mây (truyền dữ liệu lên nền tảng CoreIOT). Những kiến thức và kỹ năng từ dự án này có thể áp dụng trực tiếp vào việc thiết kế các hệ thống nhà thông minh (Smart Home), trạm quan trắc nông nghiệp, hoặc thiết bị y tế đeo tay.
+
+\subsection{Mục tiêu của hệ thống}
+Mục tiêu chính của đề tài là xây dựng một hệ thống giám sát và điều khiển thông minh trên vi điều khiển ESP32 S3, đảm bảo mã nguồn mới phải có chức năng khác biệt ít nhất 30\% so với mã nguồn gốc. Để đạt được điều này, hệ thống cần hoàn thành các mục tiêu cụ thể sau:
+
+\begin{itemize}
+    \item \textbf{Cải tiến kỹ thuật nhúng:} Quản lý trạng thái nhấp nháy của đèn LED theo nhiệt độ và cấu hình màu sắc của LED NeoPixel dựa trên độ ẩm (ít nhất 3 mức độ khác nhau) thông qua semaphore và tín hiệu đồng bộ.
+    \item \textbf{Quản lý hiển thị:} Sử dụng semaphore để quản lý tài nguyên, hiển thị thông số và ít nhất 3 trạng thái cảnh báo trên màn hình LCD mà không dùng biến toàn cục.
+    \item \textbf{Giao diện tương tác:} Thiết lập ESP32 S3 làm điểm truy cập (Access Point) và thiết kế một máy chủ web trực quan cho phép người dùng điều khiển ít nhất hai thiết bị ngoại vi.
+    \item \textbf{Triển khai TinyML:} Xây dựng bộ dữ liệu, huấn luyện, chạy mô hình TinyML trên phần cứng và tiến hành đo lường độ chính xác.
+    \item \textbf{Tích hợp đám mây:} Cấu hình ESP32 S3 ở chế độ Trạm (STA) để xuất bản thành công dữ liệu cảm biến lên máy chủ đám mây CoreIOT bằng mã xác thực hợp lệ.
+\end{itemize}
+
+\subsection{Phạm vi và giới hạn}
+Dự án được triển khai toàn bộ trên nền tảng vi điều khiển ESP32 S3 bằng ngôn ngữ C/C++ thông qua plugin PlatformIO. Trong giới hạn của đề tài, cấu hình phần cứng của bo mạch được cố định ở chế độ 301B9 và 812H6.
+
+Về mặt dữ liệu và kết nối, hệ thống giới hạn việc thu thập các thông số cơ bản (nhiệt độ, độ ẩm) và truyền dữ liệu thông qua giao thức Wi-Fi hiện có tại phòng thí nghiệm. Quá trình huấn luyện mô hình TinyML sử dụng tập dữ liệu có quy mô nhỏ gọn, phù hợp với dung lượng bộ nhớ của ESP32 S3, và nền tảng CoreIOT được sử dụng như giải pháp lưu trữ đám mây duy nhất thay vì triển khai một máy chủ (Server) độc lập. Việc kiểm thử hệ thống được thực hiện trong môi trường mô phỏng (phòng Lab), tập trung vào tính logic của thuật toán quản lý RTOS thay vì tối ưu hóa cho điều kiện hoạt động khắc nghiệt ngoài trời.

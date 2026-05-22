@@ -1,0 +1,62 @@
+\contentsline {section}{\numberline {1}Giới thiệu}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Lý do chọn đề tài}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Bối cảnh ứng dụng thực tế}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Mục tiêu của hệ thống}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Phạm vi và giới hạn}{3}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Cơ sở lý thuyết}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Phần cứng}{5}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Bo mạch lập trình nhúng Yolo UNO và Vi điều khiển ESP32-S3}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Cảm biến nhiệt độ và độ ẩm DHT20}{7}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Đèn LED đơn cảnh báo (Tích hợp onboard)}{9}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Đèn LED màu NeoPixel WS2812B (Tích hợp onboard)}{9}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Màn hình hiển thị LCD I2C}{10}{subsubsection.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.6}Giao thức truyền thông và kết nối}{11}{subsubsection.2.1.6}%
+\contentsline {subsection}{\numberline {2.2}FreeRTOS}{12}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Quản lý tác vụ (Task Management)}{12}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Cơ chế lập lịch thời gian thực}{12}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Giao tiếp và đồng bộ giữa các task}{13}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Quản lý bộ nhớ}{13}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Software Timer}{13}{subsubsection.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.6}Tiết kiệm năng lượng}{14}{subsubsection.2.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.7}Khả năng mở rộng và tương thích}{14}{subsubsection.2.2.7}%
+\contentsline {subsubsection}{\numberline {2.2.8}Các thư viện hỗ trợ IoT}{14}{subsubsection.2.2.8}%
+\contentsline {subsection}{\numberline {2.3}CoreIOT}{14}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Các chức năng chính của CoreIOT}{14}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Kiến trúc hệ thống}{15}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Đặc điểm nổi bật}{15}{subsubsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.4}TinyML}{16}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Đặc điểm của TinyML}{16}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Kiến trúc hoạt động của TinyML}{16}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}TensorFlow Lite Micro}{16}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Ứng dụng của TinyML trong IoT}{17}{subsubsection.2.4.4}%
+\contentsline {section}{\numberline {3}Thiết kế hệ thống}{18}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Tổng quan hệ thống}{18}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Khối 1: Hiển thị LED + LCD, Ngoại vi}{18}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Khối 2: Webserver + Điều khiển cục bộ}{19}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Khối 3: CoreIOT}{19}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Khối 4: TinyML}{20}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Kiến trúc xử lý và Thiết kế mô hình}{20}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Triển khai mô hình trên ESP32 S3}{20}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Tích hợp với FreeRTOS và Luồng hoạt động}{20}{subsubsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.6}Khối 5: Định danh thiết bị và Bảo mật bằng MAC Address}{21}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Hiện thực hệ thống}{22}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Khối 1: Hiện thực LED + LCD, Ngoại vi (Triển khai trên Yolo UNO 2)}{22}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Hiện thực tác vụ LED đơn (Task 1)}{22}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Hiện thực tác vụ điều khiển NeoPixel (Task 2)}{22}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3}Hiện thực tác vụ hiển thị LCD I2C (Task 3)}{23}{subsubsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.2}Khối 2: Webserver (Triển khai trên Yolo UNO 2)}{23}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Khối 3: CoreIOT + MQTT (Triển khai trên Yolo UNO 1)}{24}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Khối 4: TinyML (Triển khai trên Yolo UNO 1)}{24}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}Hiện thực TinyML Task}{25}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}Hiện thực TensorFlow Lite Micro và Tensor Arena}{25}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.3}Nạp dữ liệu trực tiếp và Kịch bản kiểm thử tĩnh (Startup Test)}{25}{subsubsection.4.4.3}%
+\contentsline {subsubsection}{\numberline {4.4.4}Hiện thực cơ chế cảnh báo và Đo lường độ trễ}{26}{subsubsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.5}Khối 5: Giao tiếp MacAddress (Xác thực phân tán mạng 2 Board)}{26}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Kết quả}{27}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Webserver + Hiển thị led}{27}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Led Neon + LCD}{27}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}MQTT + CoreIOT}{29}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}TinyML + MacAddress}{29}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Kết luận}{32}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Những kết quả đạt được}{32}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Hạn chế và Hướng phát triển}{33}{subsection.6.2}%

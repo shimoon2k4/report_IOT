@@ -1,0 +1,25 @@
+\section{Kết luận}
+
+\subsection{Những kết quả đạt được}
+Sau một quá trình nghiên cứu, thiết kế và hiện thực nghiêm túc, nhóm đã hoàn thành toàn vẹn các mục tiêu đề ra cho dự án nâng cấp hệ thống nhúng thời gian thực dựa trên repo gốc YoloUNO\_PlatformIO - RTOS\_Project. Hệ thống đã hiện thực thành công và vận hành ổn định trọn vẹn cả 6 nhiệm vụ cốt lõi, minh chứng cho một giải pháp IoT cận biên thông minh và đồng bộ đám mây:
+\begin{itemize}
+    \item \textbf{Về mặt lập trình hệ điều hành thời gian thực FreeRTOS:} Nhóm đã làm chủ và ứng dụng chuẩn xác các cơ chế đồng bộ hóa luồng phức tạp như Semaphore (điều khiển LED đơn nhấp nháy theo nhiệt độ và điều phối quyền ghi LCD) và cơ chế Tín hiệu - Task Notifications (cập nhật động dải màu NeoPixel theo độ ẩm). Việc loại bỏ hoàn toàn 100\% các biến toàn cục giúp mã nguồn đạt độ an toàn dữ liệu cao, loại trừ tuyệt đối lỗi tranh chấp tài nguyên.
+    \item \textbf{Về năng lực xử lý tại biên (Edge AI):} Mô hình trí tuệ nhân tạo nhúng TinyML đã được hiện thực thành công bằng thư viện TensorFlow Lite Micro, chạy suy luận thời gian thực trực tiếp trên phân vùng bộ nhớ tĩnh Tensor Arena của chip ESP32 S3, đưa ra kết quả phân loại trạng thái môi trường với độ chính xác thực nghiệm cao.
+    \item \textbf{Về hạ tầng kết nối cục bộ và truyền thông mây:} Giao diện Web Server ở chế độ Access Point được thiết kế lại hoàn toàn, cho phép tương tác trực quan và điều khiển độc lập hai thiết bị ngoại vi với độ trễ tối ưu. Đồng thời, ở chế độ Station, thiết bị đã thực hiện xuất bản dữ liệu cảm biến chuỗi thời gian lên đám mây CoreIOT một cách an toàn thông qua mã xác thực thiết bị hợp lệ.
+    \item \textbf{Tính đổi mới và tổ chức nhóm:} Toàn bộ hệ thống thể hiện mức độ cải tiến tính năng và logic mã nguồn vượt trội trên 30\% so với nền tảng ban đầu. Mã nguồn được quản lý phiên bản một cách có tổ chức, minh bạch và đóng góp đồng đều giữa các thành viên thông qua kho lưu trữ GitHub.
+\end{itemize}
+
+\subsection{Hạn chế và Hướng phát triển}
+Bên cạnh những kết quả tích cực đã đạt được, hệ thống vẫn tồn tại một số điểm hạn chế nhất định do giới hạn về mặt hạ tầng mạng và thiết bị phòng thí nghiệm:
+\begin{itemize}
+    \item Do sử dụng các linh kiện cảm biến phổ thông phục vụ lab mô phỏng, độ chính xác của dữ liệu đôi khi còn xảy ra hiện tượng nhiễu nhẹ trong môi trường kín, cần các bộ lọc số phức tạp hơn.
+    \item Tập dữ liệu (Dataset) huấn luyện cho mô hình TinyML vẫn ở quy mô nhỏ, giới hạn ở một số kịch bản phân loại môi trường cơ bản, chưa bao quát hết các biến động phức tạp của điều kiện thực tế ngoài trời.
+\end{itemize}
+
+Để phát triển hệ thống thành một giải pháp thương mại hoàn chỉnh trong tương lai, nhóm đề xuất các hướng mở rộng cụ thể như sau:
+\begin{itemize}
+    \item \textbf{Nâng cấp phần cứng và cảm biến:} Thay thế các cảm biến hiện tại bằng các module cảm biến đạt chuẩn công nghiệp để tăng cường độ chính xác và độ bền vận hành $24/7$.
+    \item \textbf{Mở rộng mô hình học máy biên nâng cao:} Thu thập tập dữ liệu lớn hơn, huấn luyện các mạng nơ-ron học sâu đa lớp để tối ưu hóa tỷ lệ nhận dạng bất thường và dự báo sớm các nguy cơ sự cố môi trường.
+    \item \textbf{Tích hợp cơ chế điều khiển tự động phản hồi khẩn cấp:} Bổ sung tính năng tự động kích hoạt các hệ thống chấp hành công suất lớn như quạt hút khói, hệ thống phun sương hoặc còi báo động diện rộng ngay khi TinyML phát hiện trạng thái nguy cấp.
+    \item \textbf{Nâng cấp hạ tầng đám mây:} Triển khai và đưa máy chủ điều phối Flask lên các nền tảng điện toán đám mây độc lập (như AWS hoặc Google Cloud) nhằm nâng cao tính mở rộng, hỗ trợ quản lý tập trung mạng lưới gồm nhiều thiết bị ESP32 S3 hoạt động đồng thời.
+\end{itemize}
