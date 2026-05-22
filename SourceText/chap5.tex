@@ -1,10 +1,10 @@
-\section{Kết quả}
+\section{Kết quả thực nghiệm}
 
-\subsection{Webserver + Hiển thị led}
-Sau quá trình thực nghiệm trực tiếp tại phòng thí nghiệm, cụm chức năng tương tác cục bộ phối hợp giữa hai bo mạch Yolo UNO đã vận hành ổn định và đạt được các kết quả kiểm thử chức năng trực quan thông qua hình ảnh giao diện và hệ thống đèn chỉ thị:
+\subsection{Webserver và Cảnh báo LED cục bộ}
+Sau quá trình thực nghiệm trực tiếp tại phòng thí nghiệm, toàn bộ hệ thống đơn bo mạch đa tác vụ chạy trên Yolo UNO đã vận hành ổn định. Các kết quả kiểm thử chức năng được ghi nhận cụ thể như sau:
 \begin{itemize}
-    \item \textbf{Kết quả hiện thực máy chủ Web cục bộ (Task 4 trên Yolo UNO 2):} Khi bo mạch Yolo UNO 2 kích hoạt chế độ Điểm truy cập (Access Point Mode), thiết bị khởi tạo mạng Wi-Fi thành công. Giao diện người dùng WebUI hiển thị trực quan và sắc nét trên trình duyệt quản trị như minh chứng ở Hình \ref{fig:webserver_ui}. Khi người dùng tương tác nhấn vào các nút bấm cơ cấu chấp hành trên giao diện Web, máy chủ tích hợp giao thức WebSocket (\texttt{AsyncWebSocket}) tiếp nhận bản tin trực tiếp và xử lý tức thời, cho phép bật/tắt độc lập và chính xác hai thiết bị ngoại vi LED1 và LED2 kết nối vật lý với bo mạch này.
-    \item \textbf{Kết quả hiển thị LED đơn chỉ thị nhiệt độ (Task 1 trên Yolo UNO 2):} Tác vụ quản lý LED đơn chạy nền FreeRTOS thực thi đồng bộ qua Semaphore nhị phân (\textit{Binary Semaphore}) hoạt động chính xác theo dữ liệu nhiệt độ nhận được không dây từ Yolo UNO 1. Minh chứng thực nghiệm được nhóm ghi nhận trực tiếp qua \href{https://drive.google.com/drive/folders/1CUfE8fknewNf8SvfNuVBJEifk1m3CWep?usp=sharing}{Video Thực Nghiệm Hệ Thống} cho thấy đèn LED tự động chuyển đổi linh hoạt qua lại giữa 3 chế độ tần số nhấp nháy: chu kỳ dài (tắt/nhấp nháy chậm) ở dải an toàn, chu kỳ trung bình khi ở dải cảnh báo, và nhấp nháy tần số cao liên tục khi nhiệt độ mô phỏng vượt ngưỡng khẩn cấp.
+    \item \textbf{Kết quả máy chủ Web cục bộ và WebSocket:} Khi chưa có cấu hình mạng, vi điều khiển tự phát Wi-Fi Access Point thành công. Người dùng truy cập cấu hình và điều khiển qua giao diện WebUI trực quan (Hình \ref{fig:webserver_ui}). Kênh truyền song công WebSocket hoạt động tin cậy; khi người dùng bật/tắt các thiết bị ngoại vi trên giao diện Web, bản tin JSON được phân tích tức thời và vi điều khiển điều khiển trực tiếp mức logic các chân GPIO vật lý tương ứng mà không xảy ra độ trễ cảm nhận được. Dữ liệu cảm biến nhiệt độ và độ ẩm cũng được cập nhật liên tục từ bo mạch lên giao diện Web cứ sau mỗi 5 giây.
+    \item \textbf{Kết quả chỉ thị LED đơn theo nhiệt độ (Task 1):} Tác vụ \texttt{led\_blinky} đồng bộ qua \texttt{xLedSemaphore} hoạt động chính xác. Khi nhiệt độ môi trường thay đổi, chu kỳ nháy của đèn LED đơn tự động chuyển đổi mượt mà giữa 3 chế độ dải đo: nhấp nháy rất chậm (an toàn, dưới $30^{\circ}$C), nhấp nháy chu kỳ trung bình 1 giây (cảnh báo, từ $30^{\circ}$C đến $35^{\circ}$C), và nhấp nháy tần số cao chu kỳ 0.2 giây (nguy cấp, trên $35^{\circ}$C).
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -20,46 +20,46 @@ Sau quá trình thực nghiệm trực tiếp tại phòng thí nghiệm, cụm 
         \includegraphics[width=\textwidth]{SourceImage/webUi2.png} 
         \caption{Giao diện trạng thái thiết bị 2}
     \end{subfigure}
-    \caption{Giao diện bảng điều khiển Web Server thực tế chạy trên trình duyệt của Yolo UNO 2}
+    \caption{Giao diện bảng điều khiển Web Server thực tế hiển thị trên trình duyệt Client}
     \label{fig:webserver_ui}
 \end{figure}
 
-\subsection{Led Neon + LCD}
-Chức năng hiển thị và chỉ thị trạng thái môi trường thời gian thực được thực thi đồng bộ trên bo mạch \textbf{Yolo UNO Khối 2 (Display Node)} thông qua gói dữ liệu nhận không dây từ Khối 1, được kiểm thử và chứng minh toàn diện qua \href{https://drive.google.com/drive/folders/1CUfE8fknewNf8SvfNuVBJEifk1m3CWep?usp=sharing}{Video Thực Nghiệm Hệ Thống} của nhóm:
+\subsection{Đồng bộ dải màu LED NeoPixel và hiển thị LCD}
+Tiến trình hiển thị và cảnh báo cục bộ tích hợp trên bo mạch được chứng minh vận hành đồng bộ và an toàn thông qua việc sử dụng các cơ chế đồng bộ FreeRTOS:
 \begin{itemize}
-    \item \textbf{Kết quả điều khiển LED NeoPixel (Task 2 trên Yolo UNO 2):} Kỹ thuật đồng bộ luồng bằng Semaphore nhị phân (\texttt{xNeoSemaphore}) hoạt động chính xác theo đúng logic thuật toán. Ghi nhận từ video kết quả vận hành cho thấy ngay khi dữ liệu độ ẩm cập nhật, dải LED RGB NeoPixel lập tức đáp ứng chuyển đổi màu sắc chỉ thị trực quan theo 3 dải đo: màu Đỏ (không khí khô), màu Xanh lá (độ ẩm lý tưởng), và màu Xanh dương (độ ẩm khẩn cấp/quá cao) mà không gặp hiện tượng trễ ngữ cảnh hay sai lệch màu sắc.
-    \item \textbf{Kết quả hiển thị màn hình LCD (Task 3 trên Yolo UNO 2):} Cơ chế kiểm soát tài nguyên dữ liệu bằng Mutex (\texttt{xMutex}) giúp màn hình LCD xuất dữ liệu chữ rõ ràng, cập nhật liên tục thông số chuỗi nhiệt độ, độ ẩm nhận từ nút cảm biến. Tiến trình thực thi trong video chứng minh LCD tự động phản hồi chuyển đổi mượt mà giữa 3 giao diện overlays trạng thái hệ thống: ``NORMAL'', ``WARNING'', và ``CRITICAL''. Toàn bộ luồng dữ liệu đóng gói không xảy ra lỗi tranh chấp RAM nhờ việc loại bỏ hoàn toàn biến toàn cục không an toàn, thay thế bằng con trỏ cấu trúc \texttt{SystemData} truyền giữa các tác vụ FreeRTOS.
+    \item \textbf{Kết quả đổi màu LED NeoPixel (Task 2):} Đồng bộ hóa thông qua \texttt{xNeoSemaphore} đảm bảo dải màu hiển thị chính xác theo độ ẩm đo được: màu Đỏ chỉ thị độ ẩm khô hạn (dưới 40\%), màu Xanh lá chỉ thị độ ẩm lý tưởng (từ 40\% đến 70\%), và màu Xanh dương chỉ thị độ ẩm quá cao (trên 70\%).
+    \item \textbf{Kết quả hiển thị LCD 1602 (Task 3):} Việc bảo vệ tài nguyên bus I2C bằng \texttt{xMutex} giúp LCD hiển thị thông tin rõ ràng, không bị chồng chéo dữ liệu hay nhiễu ký tự. Màn hình tự động cập nhật giá trị nhiệt độ và độ ẩm thực tế, đồng thời chuyển đổi linh hoạt trạng thái hệ thống: dòng chữ \texttt{State: Normal} (ở nhiệt độ an toàn), \texttt{State: Warning} (khi nhiệt độ vượt ngưỡng cảnh báo), và \texttt{State: Critical} (khi nhiệt độ chạm ngưỡng nguy cấp).
 \end{itemize}
 
 \begin{table}[H]
     \centering
-    \caption{Ma trận trạng thái đồng bộ ngoại vi trên Yolo UNO 2 ghi nhận từ Video thực nghiệm}
+    \caption{Ma trận trạng thái đồng bộ ngoại vi ghi nhận từ thực nghiệm}
     \begin{tabular}{|l|c|c|c|}
     \hline
     \textbf{Dải thông số môi trường thực tế} & \textbf{Giao diện LCD} & \textbf{Màu sắc NeoPixel} & \textbf{Tần số LED đơn} \\ \hline
-    Nhiệt độ < 30$^{\circ}$C \& Độ ẩm 50--70\% & NORMAL & Xanh lá (Lý tưởng) & Tắt / Nhấp nháy chậm \\ \hline
-    Nhiệt độ 30--40$^{\circ}$C \& Độ ẩm < 50\% & WARNING & Đỏ (Không khí khô) & Nhấp nháy chu kỳ 1s \\ \hline
-    Nhiệt độ > 40$^{\circ}$C \& Độ ẩm > 70\% & CRITICAL & Xanh dương (Ẩm ướt) & Nhấp nháy liên tục 0.2s \\ \hline
+    Nhiệt độ < 30$^{\circ}$C \& Độ ẩm 40--70\% & State: Normal & Xanh lá (Lý tưởng) & Nhấp nháy chậm (2s) \\ \hline
+    Nhiệt độ 30--35$^{\circ}$C \& Độ ẩm < 40\% & State: Warning & Đỏ (Không khí khô) & Nhấp nháy chu kỳ 1s \\ \hline
+    Nhiệt độ $\ge$ 35$^{\circ}$C \& Độ ẩm > 70\% & State: Critical & Xanh dương (Ẩm ướt) & Nhấp nháy liên tục 0.2s \\ \hline
     \end{tabular}
 \end{table}
 
-\subsection{MQTT + CoreIOT}
-Mặc dù hệ thống tập trung minh chứng kết quả thông qua giao diện Web cục bộ và log hệ thống tại biên, lớp mạng không dây diện rộng phục vụ bài toán đồng bộ dữ liệu lên đám mây vẫn được hiện thực và chạy nền ổn định trên bo mạch \textbf{Yolo UNO Khối 1 (Sensor Node)}:
+\subsection{Đẩy dữ liệu lên đám mây CoreIOT (MQTT)}
+Khi hoạt động ở chế độ Station (\texttt{STA Mode}), thiết bị tự động liên kết thành công vào bộ định tuyến và thiết lập kết nối MQTT đến máy chủ CoreIOT:
 \begin{itemize}
-    \item \textbf{Trạng thái kết nối trạm Wi-Fi (Triển khai trên Yolo UNO 1):} Tác vụ mạng (Task 6) khởi tạo thành công chip Wi-Fi ở chế độ Trạm (Station - STA), liên kết vào hạ tầng mạng Internet của phòng thí nghiệm và tự động xử lý kịch bản cấp phát địa chỉ IP qua DHCP để sẵn sàng ra mạng ngoại vi.
-    \item \textbf{Xuất bản dữ liệu Cloud CoreIOT (Triển khai trên Yolo UNO 1):} Định kỳ theo chu kỳ lấy mẫu, dữ liệu thô từ cảm biến vật lý DHT11 được đóng gói thành chuỗi JSON thu gọn và xuất bản (publish) thành công lên máy chủ CoreIOT. Quy trình xác thực bảo mật thông qua cấu trúc tiêu đề nhúng mã thiết bị (\texttt{Device ID}) và mã khóa (\texttt{Authentication Key}) được xác thực thực thi chính xác trên luồng chạy của hệ thống.
+    \item \textbf{Đăng ký thuộc tính thiết bị:} Ngay khi kết nối thành công, thiết bị xuất bản hai thuộc tính tĩnh quan trọng bao gồm địa chỉ vật lý \texttt{macAddress} lấy từ eFuse phần cứng và địa chỉ IP nội bộ \texttt{localIp} được cấp phát từ router Wi-Fi. Các thuộc tính này được hiển thị chính xác trên dashboard quản trị của đám mây CoreIOT.
+    \item \textbf{Đẩy dữ liệu viễn trắc (Telemetry):} Cứ sau 5 giây, dữ liệu nhiệt độ và độ ẩm từ cảm biến vật lý DHT20 được đóng gói thành công và đẩy lên đám mây thông qua ThingsBoard MQTT API dưới dạng telemetry \texttt{temperature} và \texttt{humidity}, cho phép vẽ biểu đồ giám sát theo thời gian thực trên Cloud.
 \end{itemize}
 
-\subsection{TinyML + MacAddress}
-Kết quả thực nghiệm mô hình trí tuệ nhân tạo nhúng phối hợp với giải pháp bảo mật định danh vật lý đa nút đem lại các chỉ số hiệu năng cụ thể được ghi nhận trực tiếp ngay trên phần cứng của thiết bị:
+\subsection{Mô hình TinyML và Tự kiểm thử (Startup Test)}
+Kiểm thử hiệu năng mô hình TinyML phân loại bất thường trên phần cứng ESP32-S3 mang lại kết quả tối ưu:
 \begin{itemize}
-    \item \textbf{Hiệu năng mô hình TinyML biên (Task 5 trên Yolo UNO 1):} Mô hình học máy thực thi suy luận trực tiếp dựa trên khung sườn TensorFlow Lite Micro trong phân vùng bộ nhớ tĩnh Tensor Arena (dung lượng RAM 8KB được cô lập an toàn cố định). Tiến trình chuẩn hóa dữ liệu thô đầu vào hoạt động chính xác theo thuật toán toán học. Kết quả trích xuất thực tế hiển thị sắc nét trên ảnh chụp log hệ thống (Hình \ref{fig:tinyml_result}) ghi nhận mô hình đạt tỷ lệ nhận dạng chính xác phân loại trạng thái môi trường ở mức \textbf{100\%}, thời gian trễ suy luận (Inference Latency) đo được đạt mức tối ưu trực tiếp trong khoảng từ \textbf{2 - 5 ms}, hoàn toàn không gây ảnh hưởng đến tính thời gian thực hay gây treo bộ lập lịch FreeRTOS ở lõi xử lý song song.
-    \item \textbf{Kết quả giao tiếp định danh MacAddress (Xác thực 2 Board):} Module định danh phần cứng thực hiện truy xuất chính xác chuỗi địa chỉ vật lý MAC Address 6-byte từ ROM eFuse của cả hai bo mạch Yolo UNO. Khi Yolo UNO 1 đóng gói dữ liệu truyền không dây sang Yolo UNO 2, chuỗi địa chỉ MAC được đính kèm chuẩn xác vào phần tiêu đề gói tin (Packet Header). Thực nghiệm cho thấy bộ lọc whitelist trên Yolo UNO 2 hoạt động hiệu quả: thiết bị xử lý và cập nhật ngoại vi LCD/LED tức thời đối với gói tin hợp lệ từ địa chỉ MAC của Yolo UNO 1, và tự động loại bỏ các gói tin không hợp lệ, bảo đảm an toàn truyền thông tuyệt đối cho mạng không dây ESP-NOW phân tán.
+    \item \textbf{Kết quả tự kiểm thử lúc khởi động:} Quá trình chạy thử 50 mẫu tĩnh tại startup hoàn tất trơn tru. Từ confusion matrix được in ra màn hình Serial, mô hình đạt độ chính xác lý thuyết cao (Accuracy đạt \textbf{100\%}, Precision đạt \textbf{100\%}, và Recall đạt \textbf{100\%}), minh chứng mô hình đã được chuyển đổi đúng sang định dạng C-array và suy luận chính xác trên thư viện TensorFlow Lite Micro.
+    \item \textbf{Thời gian trễ suy luận (Inference Latency):} Thời gian chạy thực thi hàm \texttt{interpreter->Invoke()} đo đạc được thông qua hàm \texttt{esp\_timer\_get\_time()} dao động cực kỳ ổn định trong khoảng \textbf{2 - 5 ms}. Điều này chứng tỏ RAM tĩnh Tensor Arena 8KB được tối ưu tốt, tác vụ suy luận TinyML hoàn thành rất nhanh và không hề gây chậm hoặc ảnh hưởng đến chu kỳ của bộ lập lịch FreeRTOS.
 \end{itemize}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{SourceImage/tinyML_KQ.png}
-    \caption{Ảnh chụp log thực nghiệm kết quả suy luận của mô hình TinyML trên Tensor Arena và xác thực địa chỉ MAC của Yolo UNO 1}
+    \caption{Ảnh chụp log thực nghiệm kết quả suy luận của mô hình TinyML trên Tensor Arena và thống kê chỉ số khi khởi động}
     \label{fig:tinyml_result}
 \end{figure}
