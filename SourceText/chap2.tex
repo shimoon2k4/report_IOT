@@ -9,7 +9,7 @@ Bo mạch hỗ trợ đồng thời hai chế độ kết nối không dây 2.4G
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{SourceImage/yolo-uno.png}
+    \includegraphics[width=0.5\textwidth]{SourceImage/yolo-uno.png}
     \caption{Board lập trình Yolo UNO và chip xử lý ESP32-S3}
     \label{fig:yolo_uno_board}
 \end{figure}
@@ -70,14 +70,7 @@ DHT20 là dòng cảm biến nhiệt độ và độ ẩm kỹ thuật số th�
 \end{table}
 
 \subsubsection{Đèn LED đơn cảnh báo (Tích hợp onboard)}
-Đèn LED đơn là một linh kiện bán dẫn phát quang hoạt động dựa trên hiện tượng giải phóng năng lượng dưới dạng photon khi có dòng điện thuận chạy qua tiếp giáp p-n. Đóng vai trò là thiết bị chỉ thị cục bộ trực quan, trong kiến trúc của hệ thống này, đèn LED đơn không phải là một module rời mà được \textbf{tích hợp sẵn (onboard) ngay trên mạch Yolo UNO}, kết nối trực tiếp với chân GPIO mặc định của vi điều khiển ESP32-S3. Việc sử dụng linh kiện onboard giúp tiết kiệm không gian lắp ráp và chân cắm phần cứng. Dưới sự điều phối của FreeRTOS và cơ chế Semaphore, chu kỳ đóng/ngắt dòng điện cấp vào LED được biến đổi tuần tự để tạo ra ít nhất 3 trạng thái tần số nhấp nháy khác nhau phản ánh mức độ khẩn cấp của nhiệt độ môi trường.
-
-\begin{figure}[H]
-    \centering
-    % \includegraphics[width=0.25\textwidth]{led_single.png}
-    \caption{Đèn LED đơn chỉ thị trạng thái cảnh báo tích hợp trên mạch}
-    \label{fig:led_single}
-\end{figure}
+Đèn LED đơn là một linh kiện bán dẫn phát quang hoạt động dựa trên hiện tượng giải phóng năng lượng dưới dạng photon khi có dòng điện thuận chạy qua tiếp giáp p-n. Đóng vai trò là thiết bị chỉ thị cục bộ trực quan, trong kiến trúc của hệ thống này, đèn LED đơn không phải là một module rời mà được \textbf{tích hợp sẵn (onboard) ngay trên mạch Yolo UNO} (kết nối trực tiếp với chân GPIO 38/D13 của vi điều khiển ESP32-S3). Do đèn LED được tích hợp sẵn trực tiếp trên bo mạch chính Yolo UNO, hệ thống không sử dụng module LED đơn ngoại vi riêng lẻ, do đó không có hình ảnh minh họa đấu nối phần cứng độc lập cho linh kiện này. Việc sử dụng linh kiện onboard giúp tiết kiệm không gian lắp ráp và chân cắm phần cứng. Dưới sự điều phối của FreeRTOS và cơ chế Semaphore, chu kỳ đóng/ngắt dòng điện cấp vào LED được biến đổi tuần tự để tạo ra ít nhất 3 trạng thái tần số nhấp nháy khác nhau phản ánh mức độ khẩn cấp của nhiệt độ môi trường.
 
 \begin{table}[H]
     \centering
@@ -112,7 +105,7 @@ Màn hình hiển thị tinh thể lỏng LCD (chuẩn ký tự dạng 16x2 ho�
 Việc sử dụng màn hình LCD I2C cho phép thiết bị kết nối trực tiếp vào cổng Grove I2C có sẵn trên bo mạch Yolo UNO thông qua một cáp kết nối (Grove cable) duy nhất. Giải pháp này rút gọn toàn bộ giao tiếp điều khiển phức tạp ban đầu xuống chỉ còn bốn dây tín hiệu cơ bản: VCC, GND, SDA (Dữ liệu nối tiếp) và SCL (Xung nhịp nối tiếp). Trong kiến trúc phần mềm, màn hình LCD được FreeRTOS cấp quyền truy cập an toàn thông qua cơ chế Mutex/Semaphore để hiển thị rõ ràng ít nhất 3 trạng thái cảnh báo của hệ thống.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{SourceImage/LCD.png}
+    \includegraphics[width=0.9\textwidth]{SourceImage/LCD.png}
     \caption{Màn hình hiển thị LCD I2C cắm trực tiếp vào Yolo UNO qua cáp Grove}
     \label{fig:lcd_i2c}
 \end{figure}

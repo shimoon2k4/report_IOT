@@ -27,14 +27,14 @@ Sau quá trình thực nghiệm trực tiếp tại phòng thí nghiệm, toàn 
 \subsection{Đồng bộ dải màu LED NeoPixel và hiển thị LCD}
 Tiến trình hiển thị và cảnh báo cục bộ tích hợp trên bo mạch được chứng minh vận hành đồng bộ và an toàn thông qua việc sử dụng các cơ chế đồng bộ FreeRTOS:
 \begin{itemize}
-    \item \textbf{Kết quả đổi màu LED NeoPixel (Task 2):} Đồng bộ hóa thông qua \texttt{xNeoSemaphore} đảm bảo dải màu hiển thị chính xác theo độ ẩm đo được: màu Đỏ chỉ thị độ ẩm khô hạn (dưới 40\%), màu Xanh lá chỉ thị độ ẩm lý tưởng (từ 40\% đến 70\%), và màu Xanh dương chỉ thị độ ẩm quá cao (trên 70\%).
+    \item \textbf{Kết quả đổi màu LED NeoPixel (Task 2):} Cơ chế \texttt{xNeoSemaphore} giúp đồng bộ và hiển thị màu sắc dải LED chính xác theo độ ẩm: màu Đỏ biểu thị môi trường khô (dưới 40\%), màu Xanh lá cho mức lý tưởng (40--70\%), và màu Xanh dương khi ẩm ướt (trên 70\%).
     \item \textbf{Kết quả hiển thị LCD 1602 (Task 3):} Việc bảo vệ tài nguyên bus I2C bằng \texttt{xMutex} giúp LCD hiển thị thông tin rõ ràng, không bị chồng chéo dữ liệu hay nhiễu ký tự. Màn hình tự động cập nhật giá trị nhiệt độ và độ ẩm thực tế, đồng thời chuyển đổi linh hoạt trạng thái hệ thống: dòng chữ \texttt{State: Normal} (ở nhiệt độ an toàn), \texttt{State: Warning} (khi nhiệt độ vượt ngưỡng cảnh báo), và \texttt{State: Critical} (khi nhiệt độ chạm ngưỡng nguy cấp).
 \end{itemize}
 
 \begin{table}[H]
     \centering
     \caption{Ma trận trạng thái đồng bộ ngoại vi ghi nhận từ thực nghiệm}
-    \begin{tabular}{|l|c|c|c|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{2.5cm}|>{\centering\arraybackslash}m{3.5cm}|>{\centering\arraybackslash}m{3.5cm}|}
     \hline
     \textbf{Dải thông số môi trường thực tế} & \textbf{Giao diện LCD} & \textbf{Màu sắc NeoPixel} & \textbf{Tần số LED đơn} \\ \hline
     Nhiệt độ < 30$^{\circ}$C \& Độ ẩm 40--70\% & State: Normal & Xanh lá (Lý tưởng) & Nhấp nháy chậm (2s) \\ \hline

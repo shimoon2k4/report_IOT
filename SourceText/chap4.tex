@@ -22,6 +22,15 @@ xTaskCreate(tiny_ml_task, "Tiny ML Task", 8192, &systemData, 2, NULL);
 
 Để loại bỏ hoàn toàn các biến toàn cục không an toàn, tất cả các tác vụ đều nhận dữ liệu và tài nguyên thông qua con trỏ cấu trúc \texttt{SystemData} được truyền vào tham số \texttt{pvParameters}.
 
+\begin{figure}[H]
+    \centering
+   \includegraphics[width=\textwidth]{SourceImage/tos_system_data_diagram.png}
+    \caption{Cấu trúc sơ đồ dữ liệu SystemData và phân bổ tài nguyên tác vụ}
+    \label{fig:rtos_system_data_diagram}
+\end{figure}
+
+Sơ đồ cấu trúc dữ liệu \texttt{SystemData} chia sẻ giữa các tác vụ được thể hiện trong Hình \ref{fig:rtos_system_data_diagram}. Trong kiến trúc này, lớp cấu trúc dữ liệu trung tâm đóng gói toàn bộ tài nguyên dùng chung, bao gồm các con trỏ trỏ tới các đối tượng ngoại vi phần cứng vật lý (cảm biến \texttt{DHT20* dht20}, màn hình \texttt{LiquidCrystal\_I2C* lcd}, dải đèn \texttt{Adafruit\_NeoPixel* pixel}), các biến lưu trữ thông số đo đạc thời gian thực (\texttt{temperature}, \texttt{humidity}), và các handle điều phối đồng bộ của FreeRTOS (\texttt{xMutex}, \texttt{xLedSemaphore}, \texttt{xNeoSemaphore}). Các tác vụ chấp hành phụ độc lập như \texttt{Task\_LED\_Blink}, \texttt{Task\_NEO\_Blink}, \texttt{Task\_Monitor}, và \texttt{Task\_TinyML} đều được truyền tham số đầu vào là con trỏ dẫn tới cấu trúc \texttt{SystemData} này để truy xuất tài nguyên một cách an toàn và tránh sử dụng các biến toàn cục không an toàn.
+
 \subsection{Hiện thực Khối cảnh báo và hiển thị ngoại vi}
 
 \subsubsection{Tác vụ điều khiển LED đơn (Task 1)}
@@ -49,7 +58,7 @@ if (xSemaphoreTake(data->xLedSemaphore, portMAX_DELAY) == pdTRUE) {
 Sau khi giải phóng Mutex, tác vụ sẽ nhấp nháy đèn LED vật lý (\texttt{LED\_GPIO}) với chu kỳ trễ tương ứng bằng hàm \texttt{vTaskDelay()}.
 
 \subsubsection{Tác vụ điều khiển NeoPixel (Task 2)}
-Tương tự như tác vụ LED đơn, việc đồng bộ hóa dải LED RGB NeoPixel (\texttt{neo\_blinky}) được hiện thực bằng cơ chế Semaphore nhị phân nhằm tối ưu hóa phản hồi chu kỳ:
+Tương tự tác vụ LED đơn, việc đồng bộ dải LED RGB NeoPixel (\texttt{neo\_blinky}) sử dụng cơ chế Semaphore nhị phân để tối ưu hóa phản hồi chu kỳ:
 \begin{lstlisting}[language=C++]
 if (xSemaphoreTake(data->xNeoSemaphore, portMAX_DELAY) == pdTRUE) {
     float current_humi = 0;
@@ -83,6 +92,21 @@ Tác vụ giám sát nhiệt độ - độ ẩm và màn hình hiển thị (\te
     \item Sử dụng \texttt{xSerialMutex} để in log kết quả ra cổng Serial, đồng thời đóng gói dữ liệu cảm biến dạng JSON gửi xuống các client WebSocket và đẩy lên đám mây thông qua giao thức MQTT.
 \end{enumerate}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{SourceImage/peripheral_flowchart.png}
+    \caption{Lưu đồ hoạt động của các tác vụ quản lý ngoại vi chỉ thị cục bộ}
+    \label{fig:peripheral_flowchart}
+\end{figure}
+
+Lưu đồ hoạt động chi tiết phối hợp giữa các tác vụ điều khiển ngoại vi chỉ thị được mô tả trong Hình \ref{fig:peripheral_flowchart}. Tiến trình gồm 3 nhánh hoạt động song song độc lập được đồng bộ hóa:
+\begin{itemize}
+    \item \textbf{Monitor Task (Đo đạc):} Định kỳ mỗi 2 giây, tác vụ chiếm Mutex \texttt{xMutex}, tiến hành đọc dữ liệu nhiệt độ và độ ẩm từ cảm biến DHT20, ghi dữ liệu hiển thị lên LCD 1602 và cập nhật vào cấu trúc dùng chung \texttt{SystemData}. Sau đó, giải phóng Mutex và phát tín hiệu đánh thức hai Semaphore \texttt{xLed\-Semaphore} và \texttt{xNeo\-Semaphore}.
+    \item \textbf{LED Blink Task (Cảnh báo LED đơn):} Chờ Semaphore \texttt{xLed\-Semaphore} được giải phóng. Khi được đánh thức, tác vụ chiếm Mutex \texttt{xMutex} để đọc giá trị nhiệt độ hiện tại từ \texttt{SystemData}, giải phóng Mutex rồi phân loại nhiệt độ thành 3 ngưỡng cảnh báo để quyết định chu kỳ nhấp nháy LED: nháy chậm (chu kỳ 2000ms) nếu nhiệt độ dưới $30^\circ\text{C}$, nháy vừa (chu kỳ 1000ms) nếu nhiệt độ từ $30^\circ\text{C}$ đến dưới $35^\circ\text{C}$, và nháy nhanh (chu kỳ 200ms) khi nhiệt độ đạt mức khẩn cấp từ $35^\circ\text{C}$ trở lên.
+    \item \textbf{NEO Blink Task (Cảnh báo NeoPixel):} Chờ Semaphore \texttt{xNeo\-Semaphore}. Khi được đánh thức, tác vụ chiếm Mutex để đọc độ ẩm từ \texttt{SystemData}, giải phóng Mutex rồi đổi màu dải đèn NeoPixel tương ứng với 3 trạng thái độ ẩm: hiển thị màu Đỏ (Cảnh báo khô hạn) khi độ ẩm dưới 40\%, hiển thị màu Xanh lá (Lý tưởng) khi độ ẩm từ 40\% đến 70\%, và hiển thị màu Xanh dương (Khuyên báo ẩm ướt) khi độ ẩm vượt quá 70\%.
+\end{itemize}
+Luồng logic này chỉ rõ các điều kiện rẽ nhánh dựa trên ngưỡng nhiệt độ và độ ẩm đo được để điều phối LED đơn, NeoPixel và LCD.
+
 \subsection{Hiện thực Khối Webserver và giao thức WebSocket}
 Để quản trị và điều khiển thiết bị tại chỗ qua mạng Wi-Fi nội bộ, vi điều khiển ESP32-S3 khởi chạy một máy chủ web không đồng bộ (\texttt{ESPAsyncWebServer}) lắng nghe cổng 80:
 \begin{lstlisting}[language=C++]
@@ -108,6 +132,20 @@ Khi nhận được gói tin điều khiển từ Client, hàm callback \texttt{
     \item \textbf{Khôi phục cấu hình (reset):} Xóa tệp tin lưu cấu hình và thực hiện khởi động lại hệ thống (\texttt{ESP.restart()}).
 \end{itemize}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{SourceImage/websocket_message_handling_flow.png}
+    \caption{Lưu đồ luồng truyền nhận tin nhắn WebSocket}
+    \label{fig:websocket_message_handling_flow}
+\end{figure}
+
+Quy trình tiếp nhận, phân tích cú pháp JSON và thực thi các hành động điều khiển hoặc cấu hình từ kênh WebSocket được thể hiện qua lưu đồ trong Hình \ref{fig:websocket_message_handling_flow}. Khi sự kiện nhận tin nhắn WebSocket xảy ra trên đường dẫn \texttt{/ws}, server tiến hành đọc chuỗi văn bản dữ liệu nhận được và thực hiện giải mã bằng thư viện \texttt{ArduinoJson}. Tiến trình sau đó phân tích nội dung của trường \texttt{"action"} để chia thành 3 nhánh thực thi:
+\begin{itemize}
+    \item \textbf{Nhánh điều khiển thiết bị (action = "device"):} Server trích xuất số chân GPIO và trạng thái mong muốn (\texttt{HIGH/LOW}), thực hiện gọi hàm \texttt{digitalWrite()} để bật/tắt thiết bị vật lý trực tiếp, đồng thời gửi chuỗi JSON đồng bộ trạng thái phản hồi tới tất cả các Web Client đang kết nối.
+    \item \textbf{Nhánh cấu hình mạng (action = "wifi\_change"):} Server trích xuất các thông tin kết nối mới bao gồm SSID, Password Wi-Fi, Server Token và cổng kết nối MQTT của đám mây CoreIOT, sau đó tiến hành ghi đè dữ liệu này vào tệp cấu hình \texttt{/info.dat} trong phân vùng LittleFS, gửi phản hồi xác nhận thành công và tự khởi động lại sau 1 giây.
+    \item \textbf{Nhánh khôi phục cài đặt gốc (action = "reset"):} Server thực hiện xóa tệp cấu hình \texttt{/info.dat} trong LittleFS, gửi phản hồi thông báo khôi phục cài đặt gốc thành công và gọi lệnh khởi động lại phần cứng để đưa thiết bị về trạng thái phát AP Mode.
+\end{itemize}
+
 \subsection{Hiện thực Khối kết nối đám mây CoreIOT và mDNS}
 Bên cạnh kết nối cục bộ, tác vụ nền định kỳ thực hiện kết nối với nền tảng đám mây CoreIOT thông qua giao thức MQTT bảo mật và thư viện ThingsBoard:
 \begin{lstlisting}[language=C++]
@@ -129,6 +167,22 @@ void CORE_IOT_reconnect() {
 
 Khi kết nối được thiết lập, thiết bị lập tức gửi lên máy chủ địa chỉ MAC vật lý mặc định (truy xuất trực tiếp từ eFuse) và địa chỉ IP nội bộ làm các thuộc tính định danh duy nhất (\textit{Attributes}). Dữ liệu cảm biến nhiệt độ, độ ẩm được xuất bản định kỳ thành công dưới dạng dữ liệu viễn trắc (\textit{Telemetry}).
 Đồng thời, hệ thống triển khai mDNS cho phép người dùng truy cập giao diện Web Server thông qua tên miền cục bộ thân thiện \url{http://yolound.local} mà không cần ghi nhớ địa chỉ IP động của thiết bị.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{SourceImage/cloud_sequence_diagram.png}
+    \caption{Sơ đồ trình tự truyền thông WiFi, mDNS và Cloud CoreIOT qua MQTT}
+    \label{fig:cloud_sequence_diagram}
+\end{figure}
+
+Hình \ref{fig:cloud_sequence_diagram} mô tả sơ đồ trình tự truyền thông toàn cục của thiết bị. Trình tự thời gian và tương tác giữa các thực thể được diễn ra qua các bước chính:
+\begin{enumerate}
+    \item \textbf{Kết nối mạng Wi-Fi:} Yolo UNO gửi yêu cầu xác thực kết nối đến Wi-Fi Router bằng SSID và Password. Router phản hồi cấp địa chỉ IP động thông qua giao thức DHCP.
+    \item \textbf{Đăng ký mDNS:} Yolo UNO gửi thông điệp đăng ký dịch vụ mDNS đến mạng để ánh xạ địa chỉ IP của nó với tên miền cục bộ \url{http://yolound.local}.
+    \item \textbf{Khởi chạy Web Client:} Trình duyệt của người dùng gửi yêu cầu phân giải tên miền đến Router và nhận lại địa chỉ IP của Yolo UNO. Sau đó, nó thực hiện kết nối HTTP GET để tải về mã nguồn giao diện điều khiển (HTML/CSS/JS) được lưu trên phân vùng LittleFS của ESP32-S3.
+    \item \textbf{Thiết lập liên kết Đám mây (MQTT):} Yolo UNO thực hiện kết nối TCP Client cổng 1883/8883 và gửi gói tin bắt tay MQTT tới broker CoreIOT. Khi kết nối thành công, nó gửi thuộc tính định danh (Attributes) gồm địa chỉ MAC vật lý và IP cục bộ lên máy chủ.
+    \item \textbf{Gửi dữ liệu định kỳ:} Trong suốt chu kỳ hoạt động, Yolo UNO định kỳ mỗi 5 giây đóng gói các thông số nhiệt độ và độ ẩm đo được thành chuỗi JSON viễn trắc (Telemetry) và gửi lên ThingsBoard MQTT broker phục vụ lưu trữ dữ liệu và hiển thị Dashboard.
+\end{enumerate}
 
 \subsection{Hiện thực Khối TinyML và Tự kiểm thử (Startup Test)}
 Khối học máy cận biên (\texttt{tinyml.cpp}) chạy mô hình phân loại bất thường môi trường trên Tensor Arena tĩnh nhằm tránh phân mảnh bộ nhớ động:
@@ -161,6 +215,21 @@ TfLiteStatus invoke_status = interpreter->Invoke();
 float result = output->data.f[0];
 \end{lstlisting}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{SourceImage/tinyml_startup_flowchart.png}
+    \caption{Lưu đồ thuật toán của tiến trình Startup Test TinyML}
+    \label{fig:tinyml_startup_flowchart}
+\end{figure}
+
+Lưu đồ thuật toán của tiến trình Startup Test tự động đánh giá mô hình học máy khi khởi động được mô tả trong Hình \ref{fig:tinyml_startup_flowchart}. Quy trình đánh giá chất lượng mô hình TinyML ngay tại thời điểm khởi chạy được thiết kế tối giản:
+\begin{itemize}
+    \item Khi hàm \texttt{evaluate\_accuracy()} được kích hoạt, hệ thống khởi tạo các bộ đếm đánh giá ma trận nhầm lẫn gồm \texttt{TP}, \texttt{FP}, \texttt{TN}, \texttt{FN} và biến đếm số dự đoán chính xác \texttt{Correct} bằng 0.
+    \item Tiếp theo, hệ thống khởi chạy một vòng lặp duyệt tuần tự qua 50 mẫu thử nghiệm tĩnh được định nghĩa sẵn trong tệp \texttt{test\_dataset.h}. Tại mỗi lượt lặp thứ $i$, hệ thống đọc dữ liệu nhiệt độ/độ ẩm tương ứng, nạp vào Tensor đầu vào và gọi bộ thông dịch TensorFlow Lite Micro thực thi suy luận biên (\texttt{Invoke()}). Kết quả đầu ra được phân lớp nhị phân dựa trên ngưỡng 0.5 để đưa ra dự đoán trạng thái bất thường (đoán là 1) hoặc bình thường (đoán là 0).
+    \item Sau khi có kết quả dự đoán, hệ thống so sánh với nhãn thực tế (\textit{ground truth}) để cập nhật ma trận nhầm lẫn và tăng biến đếm \texttt{Correct} nếu dự đoán trùng khớp với nhãn.
+    \item Sau khi kết thúc duyệt đủ 50 mẫu ($i \ge 50$), tiến trình thoát khỏi vòng lặp và thực hiện tính toán 3 chỉ số chất lượng chính: Độ chính xác (Accuracy), Độ tin cậy (Precision), và Độ nhạy (Recall), sau đó xuất kết quả tổng quan ra cổng Serial phục vụ quá trình tự động giám sát.
+\end{itemize}
+
 \subsection{Hiện thực Khối quản lý cấu hình động bằng LittleFS}
 Hệ thống sử dụng phân vùng bộ nhớ Flash định dạng hệ thống tệp tin LittleFS để lưu trữ các thông số kết nối cục bộ và đám mây tại đường dẫn \texttt{/info.dat} dưới định dạng JSON:
 \begin{lstlisting}[language=C++]
@@ -183,5 +252,5 @@ void Load_info_File() {
 Khi khởi động:
 \begin{itemize}
     \item Nếu file cấu hình không tồn tại hoặc rỗng, hệ thống sẽ tự động kích hoạt chế độ Điểm truy cập (\texttt{AP Mode}) để phát Wi-Fi nội bộ. Người dùng truy cập trang cấu hình trên trình duyệt để nhập SSID/Password WiFi mới và cấu hình token cho đám mây CoreIOT.
-    \item Khi nhận được thông tin lưu cấu hình qua kênh WebSocket, hàm \texttt{Save\_info\_File()} sẽ serialize tài liệu JSON và ghi đè vào \texttt{/info.dat}, sau đó gọi lệnh \texttt{ESP.restart()} để chuyển đổi sang chế độ Trạm (\texttt{STA Mode}), tự động liên kết Internet và kết nối đám mây CoreIOT.
+    \item Khi nhận cấu hình từ WebSocket, hàm \texttt{Save\_info\_File()} sẽ tiến hành ghi đè JSON vào \texttt{/info.dat}, sau đó khởi động lại thiết bị (\texttt{ESP.restart()}) để chuyển sang chế độ Trạm (\texttt{STA Mode}) và kết nối lên CoreIOT.
 \end{itemize}
