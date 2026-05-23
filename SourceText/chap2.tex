@@ -3,9 +3,9 @@
 \subsection{Phần cứng}
 
 \subsubsection{Bo mạch lập trình nhúng Yolo UNO và Vi điều khiển ESP32-S3}
-Yolo UNO là một board mạch lập trình nhúng được thiết kế và phát triển nhằm phục vụ việc nghiên cứu, thử nghiệm và triển khai các ứng dụng kết nối vạn vật IoT và Trí tuệ nhân tạo (AI). Board mạch được xây dựng trên nền tảng vi điều khiển SoC dòng ESP32-S3 mã hiệu ESP32-S3-WROOM-1, sở hữu bộ xử lý lõi kép Xtensa 32-bit với tốc độ xung nhịp lên tới 240MHz. Điểm nổi bật của cấu hình phần cứng này là việc tích hợp sẵn 16MB bộ nhớ Flash và 8MB bộ nhớ PSRAM mở rộng, mang lại không gian lưu trữ và xử lý mượt mà cho các ứng dụng đa nhiệm thời gian thực và nạp các mô hình học máy tại biên (TinyML). 
+Yolo UNO là một board mạch lập trình nhúng được thiết kế và phát triển nhằm phục vụ việc nghiên cứu, thử nghiệm và triển khai các ứng dụng kết nối vạn vật IoT và Trí tuệ nhân tạo (AI). Board mạch được xây dựng trên nền tảng vi điều khiển SoC dòng ESP32-S3 mã hiệu ESP32-S3-WROOM-1, sở hữu bộ xử lý lõi kép Xtensa 32-bit với tốc độ xung nhịp lên tới 240MHz. Bo mạch tích hợp sẵn 16~MB Flash và 8~MB PSRAM, đủ cho các ứng dụng đa nhiệm thời gian thực và suy luận TinyML.
 
-Bo mạch hỗ trợ đồng thời hai chế độ kết nối không dây 2.4GHz Wi-Fi (chuẩn 802.11 b/g/n) và Bluetooth 5 (BLE), tích hợp sẵn 12 cổng kết nối chuẩn Grove mở rộng phân tách rõ ràng thành các cổng Analog, Digital và I2C, cho phép thiết bị dễ dàng tương tác với hệ sinh thái linh kiện cảm biến ngoại vi cận biên. Trong dự án này, bo mạch được cấu hình hoạt động đồng bộ ở các chế độ phần cứng chuyên dụng 301B9 và 812H6.
+Bo mạch hỗ trợ đồng thời hai chế độ kết nối không dây 2.4GHz Wi-Fi (chuẩn 802.11 b/g/n) và Bluetooth 5 (BLE), tích hợp sẵn 12 cổng kết nối chuẩn Grove mở rộng phân tách rõ ràng thành các cổng Analog, Digital và I2C, hỗ trợ kết nối nhiều loại cảm biến và ngoại vi. Trong dự án này, bo mạch được cấu hình hoạt động đồng bộ ở các chế độ phần cứng chuyên dụng 301B9 và 812H6.
 
 \begin{figure}[H]
     \centering
@@ -32,7 +32,7 @@ Bo mạch hỗ trợ đồng thời hai chế độ kết nối không dây 2.4G
 \end{table}
 
 \subsubsection{Cảm biến nhiệt độ và độ ẩm DHT20}
-DHT20 là dòng cảm biến nhiệt độ và độ ẩm kỹ thuật số thế hệ mới, được nâng cấp đáng kể so với các thế hệ trước. Cảm biến tích hợp một chip ASIC chuyên dụng bên trong, cùng với một phần tử cảm biến độ ẩm điện dung (capacitive humidity sensor) và một cảm biến nhiệt độ tiêu chuẩn. Đặc điểm nổi bật nhất của DHT20 là việc hỗ trợ giao thức truyền thông I2C (Inter-Integrated Circuit), giúp quá trình giao tiếp với vi điều khiển ESP32-S3 trở nên ổn định, chống nhiễu tốt hơn và dễ dàng tích hợp vào hệ thống bus chung. Mỗi cảm biến DHT20 đều được hiệu chuẩn nghiêm ngặt trong phòng thí nghiệm trước khi xuất xưởng, đảm bảo độ chính xác và tính đồng nhất cao cho các ứng dụng IoT giám sát môi trường thời gian thực.
+DHT20 là dòng cảm biến nhiệt độ và độ ẩm kỹ thuật số thế hệ mới, được nâng cấp đáng kể so với các thế hệ trước. Cảm biến tích hợp chip ASIC cùng phần tử đo độ ẩm điện dung và đo nhiệt độ. DHT20 giao tiếp qua I2C, cho phép kết nối chung bus với các thiết bị I2C khác trên cùng bo mạch.
 
 \begin{figure}[H]
     \centering
@@ -48,7 +48,7 @@ DHT20 là dòng cảm biến nhiệt độ và độ ẩm kỹ thuật số th�
     \hline
     \textbf{Thông số} & \textbf{Giá trị} \\ \hline
     Điện áp hoạt động & 2.2V -- 5.5V DC \\ \hline
-    Giao thức truyền dữ liệu & I2C (Inter-Integrated Circuit) \\ \hline
+    Giao thức truyền dữ liệu & I2C \\ \hline
     Phạm vi đo độ ẩm & 0\% -- 100\% RH \\ \hline
     Phạm vi đo nhiệt độ & -40$^{\circ}$C -- 80$^{\circ}$C \\ \hline
     Độ chính xác độ ẩm & $\pm$3\% RH \\ \hline
@@ -70,7 +70,7 @@ DHT20 là dòng cảm biến nhiệt độ và độ ẩm kỹ thuật số th�
 \end{table}
 
 \subsubsection{Đèn LED đơn cảnh báo (Tích hợp onboard)}
-Đèn LED đơn là một linh kiện bán dẫn phát quang hoạt động dựa trên hiện tượng giải phóng năng lượng dưới dạng photon khi có dòng điện thuận chạy qua tiếp giáp p-n. Đóng vai trò là thiết bị chỉ thị cục bộ trực quan, trong kiến trúc của hệ thống này, đèn LED đơn không phải là một module rời mà được \textbf{tích hợp sẵn (onboard) ngay trên mạch Yolo UNO} (kết nối trực tiếp với chân GPIO 38/D13 của vi điều khiển ESP32-S3). Do đèn LED được tích hợp sẵn trực tiếp trên bo mạch chính Yolo UNO, hệ thống không sử dụng module LED đơn ngoại vi riêng lẻ, do đó không có hình ảnh minh họa đấu nối phần cứng độc lập cho linh kiện này. Việc sử dụng linh kiện onboard giúp tiết kiệm không gian lắp ráp và chân cắm phần cứng. Dưới sự điều phối của FreeRTOS và cơ chế Semaphore, chu kỳ đóng/ngắt dòng điện cấp vào LED được biến đổi tuần tự để tạo ra ít nhất 3 trạng thái tần số nhấp nháy khác nhau phản ánh mức độ khẩn cấp của nhiệt độ môi trường.
+Trong dự án này, LED đơn được tích hợp sẵn trên bo mạch Yolo UNO, kết nối với GPIO~38. Binary Semaphore điều phối tần số nhấp nháy theo ba ngưỡng nhiệt độ.
 
 \begin{table}[H]
     \centering
@@ -85,7 +85,7 @@ DHT20 là dòng cảm biến nhiệt độ và độ ẩm kỹ thuật số th�
 \end{table}
 
 \subsubsection{Đèn LED màu NeoPixel WS2812B (Tích hợp onboard)}
-NeoPixel là một giải pháp LED màu RGB thông minh tích hợp sẵn chip vi điều khiển IC dòng WS2812B ngay bên trong khoang bóng LED. Cấu trúc này cho phép điều khiển độc lập cường độ sáng và màu sắc của từng pixel riêng biệt thông qua một dây tín hiệu số duy nhất sử dụng giao thức truyền thông định thời dòng đơn mã RZ (Return-to-Zero). Mỗi bóng LED yêu cầu một chuỗi dữ liệu 24-bit màu (8-bit cho dải Xanh lá, 8-bit cho dải Đỏ, và 8-bit cho dải Xanh dương). Tương tự như LED đơn, bóng NeoPixel cũng được \textbf{tích hợp sẵn (onboard) trực tiếp trên bo mạch Yolo UNO}. Việc ứng dụng bóng NeoPixel onboard này giúp hệ thống hiển thị linh hoạt ít nhất 3 mẫu màu sắc cấu hình để cảnh báo trực quan tương quan chính xác theo sự biến động của dải độ ẩm môi trường cận biên.
+NeoPixel WS2812B là LED RGB tích hợp chip điều khiển bên trong, cho phép điều khiển màu sắc từng pixel qua một dây tín hiệu số. Mỗi pixel nhận gói dữ liệu 24-bit, 8-bit cho mỗi kênh màu. NeoPixel cũng được tích hợp sẵn trên bo mạch Yolo UNO (GPIO~18), được dùng để hiển thị ba mức màu cảnh báo theo độ ẩm.
 
 \begin{table}[H]
     \centering
@@ -101,8 +101,7 @@ NeoPixel là một giải pháp LED màu RGB thông minh tích hợp sẵn chip 
 \end{table}
 
 \subsubsection{Màn hình hiển thị LCD I2C}
-Màn hình hiển thị tinh thể lỏng LCD (chuẩn ký tự dạng 16x2 hoặc 20x4) là linh kiện hiển thị văn bản cục bộ dùng để xuất ra trực tiếp các thông số kỹ thuật của hệ thống. Nhằm tối ưu hóa thiết kế và tiết kiệm tài nguyên chân cắm GPIO của vi điều khiển ESP32-S3, dự án sử dụng loại màn hình LCD đã được tích hợp sẵn chuẩn giao tiếp I2C (Inter-Integrated Circuit). 
-Việc sử dụng màn hình LCD I2C cho phép thiết bị kết nối trực tiếp vào cổng Grove I2C có sẵn trên bo mạch Yolo UNO thông qua một cáp kết nối (Grove cable) duy nhất. Giải pháp này rút gọn toàn bộ giao tiếp điều khiển phức tạp ban đầu xuống chỉ còn bốn dây tín hiệu cơ bản: VCC, GND, SDA (Dữ liệu nối tiếp) và SCL (Xung nhịp nối tiếp). Trong kiến trúc phần mềm, màn hình LCD được FreeRTOS cấp quyền truy cập an toàn thông qua cơ chế Mutex/Semaphore để hiển thị rõ ràng ít nhất 3 trạng thái cảnh báo của hệ thống.
+Màn hình LCD 16$\times$2 hiển thị văn bản cục bộ trực tiếp trên thiết bị. Màn hình sử dụng giao tiếp I2C và kết nối vào cổng Grove I2C trên Yolo UNO qua cáp kết nối bốn dây (VCC, GND, SDA, SCL). Truy cập LCD được bảo vệ bằng Mutex để tránh xung đột bus I2C giữa các tác vụ, đồng thời hiển thị ba trạng thái cảnh báo.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{SourceImage/LCD.png}
@@ -116,10 +115,10 @@ Việc sử dụng màn hình LCD I2C cho phép thiết bị kết nối trực 
     \hline
     \textbf{Thông số} & \textbf{Giá trị} \\ \hline
     Điện áp hoạt động cấp vào & 5VDC \\ \hline
-    Giao thức truyền dữ liệu chính & I2C (Chế độ Master-Slave) \\ \hline
-    Kết nối vật lý & Cáp cắm Grove 4 chân (VCC, GND, SDA, SCL) \\ \hline
+    Giao thức truyền dữ liệu chính & I2C \\ \hline
+    Kết nối vật lý & Cáp 4 chân Grove (VCC, GND, SDA, SCL) \\ \hline
     Địa chỉ I2C mặc định & 0x27 hoặc 0x3F \\ \hline
-    Đèn nền hiển thị (Backlight) & Đèn LED tích hợp điều khiển qua phần mềm \\ \hline
+    Đèn nền & Đèn LED tích hợp điều khiển qua phần mềm \\ \hline
     \end{tabular}
 \end{table}
 \begin{table}[H]
@@ -138,45 +137,45 @@ Việc sử dụng màn hình LCD I2C cho phép thiết bị kết nối trực 
 \subsubsection{Giao thức truyền thông và kết nối}
 Hệ thống IoT đòi hỏi sự linh hoạt trong cả truyền thông cục bộ cận biên lẫn truyền thông diện rộng lên máy chủ Internet:
 \begin{itemize}
-    \item \textbf{Giao thức I2C (Inter-Integrated Circuit):} Giao thức truyền thông nối tiếp, đồng bộ, hoạt động ở chế độ Master-Slave trên hai dây bus: SDA (Serial Data Line) và SCL (Serial Clock Line). I2C hỗ trợ đa cấu hình thiết bị trên cùng một bus nhờ cơ chế định địa chỉ vật lý (Address-based signaling), lý tưởng cho việc điều khiển màn hình LCD cục bộ và giao tiếp với cảm biến DHT20.
-    \item \textbf{Chuẩn kết nối Wi-Fi (IEEE 802.11):} Hoạt động trên dải tần 2.4GHz, đóng vai trò hạ tầng kết nối không dây chủ đạo của hệ thống nhúng. ESP32 S3 hỗ trợ cấu hình Wi-Fi linh hoạt bao gồm chế độ Điểm truy cập (Access Point - AP) để thiết lập mạng cục bộ riêng biệt cho máy chủ Web, và chế độ Trạm (Station - STA) để lấy IP từ bộ định tuyến và thiết lập liên kết TCP/IP ra Internet.
-    \item \textbf{Giao thức mạng HTTP, WebSocket và MQTT:} Phục vụ lớp ứng dụng trong kiến trúc IoT. Giao thức HTTP/WebSocket hoạt động theo mô hình truyền tải trực tiếp thích hợp cho Web Server và giao diện điều khiển (Dashboard) tại chỗ. Giao thức MQTT (Message Queuing Telemetry Transport) hoạt động theo mô hình Publish-Subscribe gọn nhẹ, giảm thiểu băng thông đường truyền, tối ưu cho các tác vụ đẩy dữ liệu liên tục từ cảm biến lên đám mây Cloud.
+    \item \textbf{I2C:} Giao thức truyền thông nối tiếp, đồng bộ, hoạt động trên hai dây bus SDA và SCL. I2C hỗ trợ nhiều thiết bị trên cùng một bus nhờ cơ chế định địa chỉ, được dùng cho màn hình LCD và cảm biến DHT20.
+    \item \textbf{Chuẩn kết nối Wi-Fi (IEEE 802.11):} Hoạt động trên dải tần 2.4GHz, đóng vai trò hạ tầng kết nối không dây chủ đạo của hệ thống nhúng. ESP32 S3 hỗ trợ cấu hình Wi-Fi linh hoạt bao gồm chế độ AP để thiết lập mạng cục bộ riêng biệt cho Web Server, và chế độ STA để lấy IP từ bộ định tuyến và thiết lập liên kết TCP/IP ra Internet.
+    \item \textbf{Giao thức mạng HTTP, WebSocket và MQTT:} Phục vụ lớp ứng dụng trong kiến trúc IoT. Giao thức HTTP/WebSocket hoạt động theo mô hình truyền tải trực tiếp thích hợp cho Web Server và giao diện điều khiển (Dashboard) tại chỗ. MQTT hoạt động theo mô hình Publish-Subscribe gọn nhẹ, giảm thiểu băng thông đường truyền, tối ưu cho các tác vụ đẩy dữ liệu liên tục từ cảm biến lên đám mây Cloud.
 \end{itemize}
 
 \subsection{FreeRTOS}
 
 \subsubsection{Quản lý tác vụ (Task Management)}
-FreeRTOS là một hệ điều hành thời gian thực mã nguồn mở được thiết kế tối ưu cho vi điều khiển. Trong FreeRTOS, một ứng dụng được cấu thành từ nhiều tác vụ (Tasks) độc lập. Mỗi Task là một luồng thực thi (Thread) riêng biệt sở hữu một không gian stack và mức độ ưu tiên (Priority) được cấu hình độc lập tại thời điểm khởi tạo thông qua hàm \texttt{xTaskCreate()}. FreeRTOS quản lý vòng đời của một tác vụ qua 4 trạng thái cốt lõi: Running (Đang thực thi), Ready (Sẵn sàng), Blocked (Bị chặn/Chờ sự kiện), và Suspended (Bị tạm dừng).
+FreeRTOS là một hệ điều hành thời gian thực mã nguồn mở được thiết kế tối ưu cho vi điều khiển. Trong FreeRTOS, một ứng dụng được cấu thành từ nhiều tác vụ độc lập. Mỗi Task là một luồng thực thi riêng biệt sở hữu một không gian stack và mức độ ưu tiên được cấu hình độc lập tại thời điểm khởi tạo thông qua hàm \texttt{xTaskCreate()}. FreeRTOS quản lý vòng đời tác vụ qua bốn trạng thái: Running, Ready, Blocked và Suspended.
 
 \subsubsection{Cơ chế lập lịch thời gian thực}
-Bộ lập lịch (Scheduler) của FreeRTOS đóng vai trò quyết định tác vụ nào ở trạng thái Ready sẽ được chuyển sang trạng thái Running. Hệ thống sử dụng thuật toán lập lịch ưu tiên trưng dụng dựa trên lát cắt thời gian (Preemptive Priority-Based Scheduling with Time Slicing). Hệ điều hành duy trì một bộ đếm xung nhịp hệ thống gọi là System Tick. Cứ sau mỗi chu kỳ Tick, Bộ lập lịch sẽ quét danh sách các tác vụ Ready; tác vụ nào có mức độ ưu tiên cao nhất sẽ giành quyền kiểm soát CPU (Context Switch). Nếu các tác vụ có mức độ ưu tiên bằng nhau, bộ lập lịch sẽ luân chuyển quyền thực thi theo cơ chế vòng xoay (Round-Robin).
+Bộ lập lịch của FreeRTOS đóng vai trò quyết định tác vụ nào ở trạng thái Ready sẽ được chuyển sang trạng thái Running. Hệ thống sử dụng thuật toán lập lịch ưu tiên có trưng dụng và chia sẻ thời gian. Hệ điều hành duy trì một bộ đếm xung nhịp hệ thống gọi là System Tick. Cứ sau mỗi chu kỳ Tick, Bộ lập lịch sẽ quét danh sách các tác vụ Ready; tác vụ nào có mức độ ưu tiên cao nhất sẽ giành quyền kiểm soát CPU (Context Switch). Nếu các tác vụ có mức độ ưu tiên bằng nhau, bộ lập lịch sẽ luân chuyển quyền thực thi theo Round-Robin.
 
 \subsubsection{Giao tiếp và đồng bộ giữa các task}
 Khi nhiều tác vụ chạy đồng thời và chia sẻ tài nguyên phần cứng (như bus I2C của LCD hoặc biến toàn cục), hiện tượng tranh chấp tài nguyên (Race Condition) rất dễ xảy ra nếu không có cơ chế đồng bộ hóa an toàn:
 \begin{itemize}
-    \item \textbf{Semaphore / Mutex:} Hoạt động như một chiếc thẻ bài (Token). Tác vụ muốn truy cập tài nguyên phải thực hiện hàm lấy thẻ (\texttt{xSemaphoreTake()}); nếu tài nguyên đang bận, tác vụ sẽ rơi vào trạng thái Blocked để nhường CPU cho tác vụ khác. Sau khi xử lý xong tài nguyên, tác vụ thực hiện giải phóng thẻ (\texttt{xSemaphoreGive()}). Dự án ứng dụng Semaphore và Mutex để đồng bộ hóa tác vụ cảnh báo LED, NeoPixel theo chu kỳ nhiệt độ/độ ẩm và điều phối quyền ghi dữ liệu lên LCD mà không dùng biến toàn cục.
-    \item \textbf{Tín hiệu (Signals/Task Notifications):} Cơ chế truyền phát sự kiện trực tiếp đến một tác vụ cụ thể mà không cần qua các đối tượng trung gian. Việc sử dụng Task Notifications giải phóng đáng kể tài nguyên RAM và tối ưu hóa tốc độ chuyển đổi ngữ cảnh.
+    \item \textbf{Semaphore / Mutex:} Hoạt động theo cơ chế thẻ bài: Tác vụ muốn truy cập tài nguyên phải thực hiện hàm lấy thẻ (\texttt{xSemaphoreTake()}); nếu tài nguyên đang bận, tác vụ sẽ rơi vào trạng thái Blocked để nhường CPU cho tác vụ khác. Sau khi xử lý xong tài nguyên, tác vụ thực hiện giải phóng thẻ (\texttt{xSemaphoreGive()}). Dự án ứng dụng Semaphore và Mutex để đồng bộ hóa tác vụ cảnh báo LED, NeoPixel theo chu kỳ nhiệt độ/độ ẩm và điều phối quyền ghi dữ liệu lên LCD mà không dùng biến toàn cục.
+    \item \textbf{Task Notifications:} Cơ chế truyền phát sự kiện trực tiếp đến một tác vụ cụ thể mà không cần qua các đối tượng trung gian. Việc sử dụng Task Notifications giải phóng đáng kể tài nguyên RAM và tối ưu hóa tốc độ chuyển đổi ngữ cảnh.
 \end{itemize}
 
 \subsubsection{Quản lý bộ nhớ}
-FreeRTOS phân tách việc quản lý bộ nhớ thành hai vùng chính: bộ nhớ tĩnh (Static memory) và bộ nhớ động (Heap memory). FreeRTOS cung cấp nhiều mô hình quản lý bộ nhớ từ \texttt{heap\_1} đến \texttt{heap\_5}. Trong dự án phát triển IoT kết hợp TinyML, mô hình \texttt{heap\_4} thường được lựa chọn nhờ thuật toán gộp các khối bộ nhớ trống liền kề để giảm thiểu hiện tượng phân mảnh bộ nhớ (Memory Fragmentation), đảm bảo vùng nhớ cấp phát động cho các cấu trúc dữ liệu mạng luôn ổn định.
+FreeRTOS phân tách việc quản lý bộ nhớ thành hai vùng chính: bộ nhớ tĩnh (Static memory) và bộ nhớ động (Heap memory). FreeRTOS cung cấp nhiều mô hình quản lý bộ nhớ từ \texttt{heap\_1} đến \texttt{heap\_5}. Trong dự án phát triển IoT kết hợp TinyML, mô hình \texttt{heap\_4} thường được lựa chọn nhờ thuật toán gộp các khối bộ nhớ trống liền kề để giảm thiểu hiện tượng phân mảnh bộ nhớ, đảm bảo vùng nhớ cấp phát động cho các cấu trúc dữ liệu mạng luôn ổn định.
 
 \subsubsection{Software Timer}
-Software Timer (Bộ định thời phần mềm) cho phép thực thi một hàm chức năng (Callback function) sau một khoảng thời gian xác định, hoạt động dựa trên xung nhịp System Tick của hệ điều hành mà không cần sử dụng bộ định thời phần cứng (Hardware Timer) của chip. Timer có thể cấu hình ở chế độ chạy một lần (One-shot) hoặc lặp lại chu kỳ (Auto-reload), rất hữu ích cho các tác vụ định kỳ như quét trạng thái mạng Wi-Fi hoặc cập nhật thời gian hệ thống.
+Software Timer cho phép thực thi một hàm callback sau một khoảng thời gian xác định, dựa trên System Tick mà không cần bộ định thời phần cứng. Timer có thể cấu hình ở chế độ One-shot hoặc Auto-reload, rất hữu ích cho các tác vụ định kỳ như quét trạng thái mạng Wi-Fi hoặc cập nhật thời gian hệ thống.
 
 \subsubsection{Tiết kiệm năng lượng}
-FreeRTOS hỗ trợ tính năng \texttt{configUSE\_IDLE\_HOOK} và chế độ Tickless Idle. Khi hệ thống nhận diện tất cả các tác vụ người dùng đều đang ở trạng thái Blocked và không có tác vụ nào sẵn sàng thực thi, bộ lập lịch sẽ chuyển sang thực thi tác vụ rỗi (Idle Task). Tại đây, vi điều khiển có thể được cấu hình để đưa vào các chế độ tiết kiệm năng lượng sâu (Light Sleep hoặc Deep Sleep), ngắt các xung nhịp ngoại vi không cần thiết và chỉ thức dậy khi có ngắt phần cứng hoặc khi bộ đếm thời gian chạm ngưỡng quy định.
+FreeRTOS hỗ trợ tính năng \texttt{configUSE\_IDLE\_HOOK} và chế độ Tickless Idle. Khi hệ thống nhận diện tất cả các tác vụ người dùng đều đang ở trạng thái Blocked và không có tác vụ nào sẵn sàng thực thi, bộ lập lịch sẽ chuyển sang Idle Task. Tại đây, vi điều khiển có thể được cấu hình để đưa vào các Light Sleep hoặc Deep Sleep, ngắt các xung nhịp ngoại vi không cần thiết và chỉ thức dậy khi có ngắt phần cứng hoặc khi bộ đếm thời gian chạm ngưỡng quy định.
 
 \subsubsection{Khả năng mở rộng và tương thích}
-Kiến trúc của FreeRTOS được thiết kế theo dạng mô-đun hóa cao, lớp trừu tượng phần cứng (Hardware Abstraction Layer - HAL) độc lập giúp hệ điều hành dễ dàng tương thích và mở rộng trên nhiều dòng cấu trúc vi điều khiển khác nhau (từ lõi ARM Cortex-M cho đến kiến trúc Xtensa Tensilica dual-core của ESP32 S3). Điều này cho phép nhà phát triển dễ dàng tích hợp thêm các thư viện phần mềm bên thứ ba mà không phá vỡ cấu trúc lập lịch thời gian thực hiện có.
+Kiến trúc của FreeRTOS được thiết kế theo dạng mô-đun hóa cao, HAL độc lập giúp hệ điều hành dễ dàng tương thích và mở rộng trên nhiều dòng cấu trúc vi điều khiển khác nhau (từ lõi ARM Cortex-M cho đến kiến trúc Xtensa Tensilica dual-core của ESP32 S3). Điều này cho phép nhà phát triển dễ dàng tích hợp thêm các thư viện phần mềm bên thứ ba mà không phá vỡ cấu trúc lập lịch thời gian thực hiện có.
 
 \subsubsection{Các thư viện hỗ trợ IoT}
-Để hỗ trợ toàn diện cho các ứng dụng IoT phức tạp, FreeRTOS cung cấp hệ sinh thái thư viện phong phú bao gồm: thư viện lõi FreeRTOS-Plus-TCP hỗ trợ tầng mạng, các thư viện bảo mật lớp truyền tải như mbedTLS phục vụ mã hóa dữ liệu đầu cuối, và các thư viện giao tiếp mạng được tối ưu hóa bộ nhớ stack, giúp thiết bị nhúng giao tiếp mượt mà với các Broker cục bộ hoặc máy chủ đám mây.
+FreeRTOS cung cấp bộ thư viện hỗ trợ IoT bao gồm: FreeRTOS-Plus-TCP cho tầng mạng, mbedTLS cho mã hóa dữ liệu, và các thư viện giao tiếp mạng tối ưu bộ nhớ stack, giúp thiết bị nhúng kết nối với Broker cục bộ hoặc máy chủ đám mây.
 
 \subsection{CoreIOT}
 
 \subsubsection{Các chức năng chính của CoreIOT}
-CoreIOT là một nền tảng Đám mây ứng dụng công nghiệp (Industrial IoT Cloud Platform) chuyên dụng, cung cấp giải pháp đầu cuối cho việc quản lý, giám sát và phân tích dữ liệu thiết bị thông minh. Các chức năng cốt lõi bao gồm:
+CoreIOT là nền tảng đám mây IoT cung cấp dịch vụ thu thập, lưu trữ và hiển thị dữ liệu cảm biến theo thời gian thực. Các chức năng cốt lõi bao gồm:
 \begin{itemize}
     \item Tiếp nhận và lưu trữ có cấu trúc các chuỗi dữ liệu thời gian thực gửi về từ thiết bị nhúng.
     \item Hỗ trợ cơ chế định danh, quản lý vòng đời và xác thực bảo mật thiết bị kết nối.
@@ -186,29 +185,29 @@ CoreIOT là một nền tảng Đám mây ứng dụng công nghiệp (Industria
 \subsubsection{Kiến trúc hệ thống}
 Kiến trúc của nền tảng CoreIOT được xây dựng dựa trên mô hình ba tầng chuẩn mô hình IoT đám mây:
 \begin{enumerate}
-    \item \textbf{Tầng kết nối giao tiếp (Ingestion Layer):} Đóng vai trò là cổng tiếp nhận (Gateway API), hỗ trợ các giao thức mạng phổ biến như RESTful HTTP, MQTT bảo mật.
-    \item \textbf{Tầng xử lý và lưu trữ dữ liệu (Processing \& Storage Layer):} Sử dụng các kiến trúc cơ sở dữ liệu chuỗi thời gian (Time-Series Database) hiệu năng cao để tối ưu tốc độ ghi dữ liệu liên tục từ hàng vạn cảm biến.
-    \item \textbf{Tầng ứng dụng và hiển thị (Application/Presentation Layer):} Cung cấp các giao diện lập trình ứng dụng (API REST) kết hợp hệ thống giao diện Dashboard tương tác trực quan cho người dùng cuối.
+    \item \textbf{Tầng kết nối:} Tiếp nhận dữ liệu từ thiết bị qua HTTP và MQTT.
+    \item \textbf{Tầng lưu trữ:} Sử dụng cơ sở dữ liệu chuỗi thời gian để ghi dữ liệu cảm biến liên tục.
+    \item \textbf{Tầng ứng dụng:} Cung cấp API REST và Dashboard để người dùng truy vấn và hiển thị dữ liệu.
 \end{enumerate}
 
-\subsubsection{Đặc điểm nổi bật}
-CoreIOT nổi bật với khả năng tối ưu hóa băng thông đường truyền cực tốt nhờ việc hỗ trợ các khuôn mẫu gói tin JSON thu gọn, giao diện lập trình thiết kế kéo thả Dashboard linh hoạt, trực quan mà không đòi hỏi hạ tầng máy chủ phức tạp. Đặc biệt, hệ thống cung cấp các giải pháp mẫu (Solution Templates) được định cấu hình sẵn, giúp các kỹ sư nhúng nhanh chóng kết nối phần cứng thông qua mã xác thực thiết bị duy nhất (Device Token), tăng tốc độ triển khai dự án thực tế.
+% \subsubsection{Đặc điểm nổi bật}
+% CoreIOT hỗ trợ gói tin JSON thu gọn, cung cấp giao diện Dashboard kéo thả và Solution Template định cấu hình sẵn. Thiết bị xác thực với máy chủ bằng Device Token duy nhất.
 
 \subsection{TinyML}
 
 \subsubsection{Đặc điểm của TinyML}
-TinyML (Tiny Machine Learning) là một lĩnh vực nghiên cứu kết hợp giữa hệ thống nhúng và học máy, hướng tới việc thực thi các mô hình mạng học sâu và thuật toán học máy trực tiếp trên các thiết bị phần cứng có công suất tiêu thụ cực thấp (dưới mức miliwatt) và tài nguyên bộ nhớ vô cùng hạn chế (chỉ vài trăm Kilobytes RAM). Khác với các mô hình AI truyền thống đòi hỏi trung tâm dữ liệu đám mây mạnh mẽ, TinyML đưa năng lực tính toán thông minh về sát cạnh biên, loại bỏ hoàn toàn độ trễ đường truyền mạng, bảo mật thông tin tuyệt đối và cho phép thiết bị hoạt động liên tục ngay cả khi mất kết nối Internet hoàn toàn.
+TinyML là lĩnh vực kết hợp hệ thống nhúng và học máy, hướng tới việc thực thi các mô hình trực tiếp trên thiết bị có tài nguyên hạn chế (vài trăm kB RAM). Suy luận được thực thi cục bộ, giảm độ trễ và không phụ thuộc vào kết nối mạng.
 
 \subsubsection{Kiến trúc hoạt động của TinyML}
 Quy trình thực thi một kiến trúc TinyML trên thiết bị biên tuân thủ chặt chẽ các giai đoạn sau:
 \begin{enumerate}
-    \item \textbf{Thu thập dữ liệu tại biên (Data Ingestion):} Dữ liệu thô liên tục được trích xuất từ cảm biến với tần số lấy mẫu cố định.
-    \item \textbf{Tiền xử lý và trích xuất đặc trưng (Feature Extraction):} Loại bỏ nhiễu tín hiệu. Tùy thuộc vào thiết kế mô hình, dữ liệu có thể được chuẩn hóa về khoảng $[0, 1]$ hoặc $[-1, 1]$, hoặc được nạp thẳng dưới dạng dữ liệu số thực gốc để tối ưu chu trình tính toán.
-    \item \textbf{Suy luận mô hình (Inference):} Dữ liệu đặc trưng được đưa qua các lớp mạng nơ-ron (như CNN hoặc Dense Layers) để tính toán ma trận và đưa ra kết quả phân loại trạng thái. Để tăng tốc độ, mô hình có thể được lượng tử hóa (Quantization) hoặc giữ nguyên cấu trúc số thực (\texttt{float32}).
+    \item \textbf{Thu thập dữ liệu:} Dữ liệu thô liên tục được trích xuất từ cảm biến với tần số lấy mẫu cố định.
+    \item \textbf{Tiền xử lý và trích xuất đặc trưng:} Loại bỏ nhiễu tín hiệu. Tùy thuộc vào thiết kế mô hình, dữ liệu có thể được chuẩn hóa về khoảng $[0, 1]$ hoặc $[-1, 1]$, hoặc được nạp thẳng dưới dạng dữ liệu số thực gốc để tối ưu chu trình tính toán.
+    \item \textbf{Suy luận:} Dữ liệu đặc trưng được đưa qua các lớp mạng nơ-ron (như CNN hoặc Dense Layers) để tính toán ma trận và đưa ra kết quả phân loại trạng thái. Để tăng tốc độ, mô hình có thể được lượng tử hóa hoặc giữ nguyên cấu trúc \texttt{float32}.
 \end{enumerate}
 
 \subsubsection{TensorFlow Lite Micro}
-TensorFlow Lite Micro là khung sườn phần mềm (Framework) học máy mã nguồn mở được thiết kế riêng bởi Google để chạy các mô hình học sâu trên các chip vi điều khiển kiến trúc 32-bit. Khung sườn này được tối ưu hóa triệt để để không sử dụng bất kỳ cơ chế cấp phát bộ nhớ động nào của hệ điều hành (không dùng \texttt{malloc} hay các toán tử \texttt{new}) nhằm tránh tuyệt đối lỗi phân mảnh RAM và đảm bảo tính thực thi an toàn cao. Toàn bộ các mảng trọng số, lớp mạng và biến trung gian của mô hình đều được quản lý tập trung trong một mảng bộ nhớ tĩnh được cấp phát từ trước gọi là \textbf{Tensor Arena}. Các toán tử tính toán trong thư viện được tối ưu hóa toán học để tận dụng tối đa tập lệnh phần cứng của chip xử lý, giúp tăng tốc độ nhân ma trận.
+TensorFlow Lite Micro là framework học máy mã nguồn mở được thiết kế riêng bởi Google để chạy các mô hình học sâu trên các chip vi điều khiển kiến trúc 32-bit. Khung sườn này được tối ưu hóa triệt để để không sử dụng bất kỳ cơ chế cấp phát bộ nhớ động nào của hệ điều hành (không dùng \texttt{malloc} hay các toán tử \texttt{new}) nhằm tránh tuyệt đối lỗi phân mảnh RAM và đảm bảo tính thực thi an toàn cao. Toàn bộ các mảng trọng số, lớp mạng và biến trung gian của mô hình đều được quản lý tập trung trong một mảng bộ nhớ tĩnh được cấp phát từ trước gọi là \textbf{Tensor Arena}. Các toán tử tính toán trong thư viện được tối ưu hóa toán học để tận dụng tối đa tập lệnh phần cứng của chip xử lý, giúp tăng tốc độ nhân ma trận.
 
 \subsubsection{Ứng dụng của TinyML trong IoT}
-Trong các hệ thống IoT thông minh, TinyML đóng vai trò là "bộ não" cục bộ giúp nâng cao giá trị dữ liệu thô. Thay vì liên tục gửi dữ liệu cảm biến chưa qua xử lý lên đám mây gây lãng phí băng thông mạng và năng lượng pin, TinyML thực hiện phân tích, nhận diện mẫu hành vi, dự đoán xu hướng hư hỏng của máy móc, hoặc phát hiện các bất thường về nhiệt độ, môi trường ngay tại chỗ. Thiết bị chỉ phát tín hiệu mạng hoặc đẩy dữ liệu lên Cloud khi mô hình TinyML phát hiện ra các sự kiện thực sự quan trọng hoặc các tình huống khẩn cấp, tối ưu hóa toàn diện hiệu suất vận hành của toàn mạng lưới IoT.
+Trong các hệ thống IoT, TinyML phân tích dữ liệu ngay trên thiết bị thay vì gửi toàn bộ dữ liệu thô lên đám mây. Thiết bị chỉ truyền kết quả phân loại hoặc cảnh báo khi mô hình phát hiện sự kiện bất thường, giảm băng thông và năng lượng tiêu thụ.

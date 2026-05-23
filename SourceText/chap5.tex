@@ -4,7 +4,7 @@
 Sau quá trình thực nghiệm trực tiếp tại phòng thí nghiệm, toàn bộ hệ thống đơn bo mạch đa tác vụ chạy trên Yolo UNO đã vận hành ổn định. Các kết quả kiểm thử chức năng được ghi nhận cụ thể như sau:
 \begin{itemize}
     \item \textbf{Kết quả máy chủ Web cục bộ và WebSocket:} Khi chưa có cấu hình mạng, vi điều khiển tự phát Wi-Fi Access Point thành công. Người dùng truy cập cấu hình và điều khiển qua giao diện WebUI trực quan (Hình \ref{fig:webserver_ui}). Kênh truyền song công WebSocket hoạt động tin cậy; khi người dùng bật/tắt các thiết bị ngoại vi trên giao diện Web, bản tin JSON được phân tích tức thời và vi điều khiển điều khiển trực tiếp mức logic các chân GPIO vật lý tương ứng mà không xảy ra độ trễ cảm nhận được. Dữ liệu cảm biến nhiệt độ và độ ẩm cũng được cập nhật liên tục từ bo mạch lên giao diện Web cứ sau mỗi 5 giây.
-    \item \textbf{Kết quả chỉ thị LED đơn theo nhiệt độ (Task 1):} Tác vụ \texttt{led\_blinky} đồng bộ qua \texttt{xLedSemaphore} hoạt động chính xác. Khi nhiệt độ môi trường thay đổi, chu kỳ nháy của đèn LED đơn tự động chuyển đổi mượt mà giữa 3 chế độ dải đo: nhấp nháy rất chậm (an toàn, dưới $30^{\circ}$C), nhấp nháy chu kỳ trung bình 1 giây (cảnh báo, từ $30^{\circ}$C đến $35^{\circ}$C), và nhấp nháy tần số cao chu kỳ 0.2 giây (nguy cấp, trên $35^{\circ}$C).
+    \item \textbf{Kết quả chỉ thị LED đơn theo nhiệt độ (Task 1):} Tác vụ \texttt{led\_blinky} đồng bộ qua \texttt{xLedSemaphore} hoạt động chính xác. Khi nhiệt độ môi trường thay đổi, chu kỳ nháy của đèn LED đơn tự động chuyển đổi giữa 3 chế độ: nhấp nháy rất chậm (an toàn, dưới $30^{\circ}$C), nhấp nháy chu kỳ trung bình 1 giây (cảnh báo, từ $30^{\circ}$C đến $35^{\circ}$C), và nhấp nháy tần số cao chu kỳ 0.2 giây (nguy cấp, trên $35^{\circ}$C).
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -44,19 +44,19 @@ Tiến trình hiển thị và cảnh báo cục bộ tích hợp trên bo mạc
 \end{table}
 
 \subsection{Đẩy dữ liệu lên đám mây CoreIOT (MQTT)}
-Khi hoạt động ở chế độ Station (\texttt{STA Mode}), thiết bị tự động liên kết thành công vào bộ định tuyến và thiết lập kết nối MQTT đến máy chủ CoreIOT:
+Khi hoạt động ở STA Mode, thiết bị tự động liên kết thành công vào bộ định tuyến và thiết lập kết nối MQTT đến máy chủ CoreIOT:
 \begin{itemize}
     \item \textbf{Đăng ký thuộc tính thiết bị:} Ngay khi kết nối thành công, thiết bị xuất bản hai thuộc tính tĩnh quan trọng bao gồm địa chỉ vật lý \texttt{macAddress} lấy từ eFuse phần cứng và địa chỉ IP nội bộ \texttt{localIp} được cấp phát từ router Wi-Fi. Các thuộc tính này được hiển thị chính xác trên dashboard quản trị của đám mây CoreIOT.
     \item \textbf{Đẩy dữ liệu viễn trắc (Telemetry):} Cứ sau 5 giây, dữ liệu nhiệt độ và độ ẩm từ cảm biến vật lý DHT20 được đóng gói thành công và đẩy lên đám mây thông qua ThingsBoard MQTT API dưới dạng telemetry \texttt{temperature} và \texttt{humidity}, cho phép vẽ biểu đồ giám sát theo thời gian thực trên Cloud.
 \end{itemize}
 
 \subsection{Mô hình TinyML và Tự kiểm thử (Startup Test)}
-Kiểm thử hiệu năng mô hình TinyML phân loại bất thường trên phần cứng ESP32-S3 mang lại kết quả tối ưu:
+Kiểm thử mô hình TinyML trên phần cứng ESP32-S3 cho kết quả:
 \begin{itemize}
-    \item \textbf{Kết quả tự kiểm thử lúc khởi động:} Quá trình chạy thử 50 mẫu tĩnh tại startup hoàn tất trơn tru. Từ confusion matrix được in ra màn hình Serial, mô hình đạt Accuracy \textbf{100\%}, Precision \textbf{100\%}, và Recall \textbf{100\%} trên tập kiểm thử tĩnh 50 mẫu, minh chứng mô hình đã được chuyển đổi đúng sang định dạng C-array và suy luận chính xác trên thư viện TensorFlow Lite Micro.
+    \item \textbf{Kết quả tự kiểm thử lúc khởi động:} Quá trình chạy thử 50 mẫu tĩnh khi khởi động hoàn thành. Từ confusion matrix được in ra màn hình Serial, mô hình đạt Accuracy \textbf{100\%}, Precision \textbf{100\%}, và Recall \textbf{100\%} trên tập kiểm thử tĩnh 50 mẫu, minh chứng mô hình đã được chuyển đổi đúng sang định dạng C-array và suy luận chính xác trên thư viện TensorFlow Lite Micro.
 
 \textbf{Thảo luận về hiệu suất mô hình:} Kết quả 100\% trên tập 50 mẫu phản ánh rằng mô hình hoạt động nhất quán trong miền dữ liệu đã được huấn luyện và rằng quá trình chuyển đổi sang định dạng \texttt{float32} C-array không gây mất mát thông tin trọng số. Tuy nhiên, cần lưu ý rằng tập kiểm thử có quy mô nhỏ và được thu thập trong điều kiện phòng thí nghiệm có kiểm soát; do đó, kết quả này không nhất thiết đại diện cho độ chính xác thực tế trong môi trường ngoài trời có điều kiện nhiệt độ và độ ẩm biến động phức tạp hơn. Để đánh giá toàn diện hơn, cần mở rộng tập dữ liệu kiểm thử với các mẫu từ nhiều kịch bản môi trường khác nhau trong các công việc tiếp theo.
-    \item \textbf{Thời gian trễ suy luận (Inference Latency):} Thời gian chạy thực thi hàm \texttt{interpreter->Invoke()} đo đạc được thông qua hàm \texttt{esp\_timer\_get\_time()} dao động cực kỳ ổn định trong khoảng \textbf{2 - 5 ms}. Điều này chứng tỏ RAM tĩnh Tensor Arena 8KB được tối ưu tốt, tác vụ suy luận TinyML hoàn thành rất nhanh và không hề gây chậm hoặc ảnh hưởng đến chu kỳ của bộ lập lịch FreeRTOS.
+    \item \textbf{Thời gian trễ suy luận (Inference Latency):} Thời gian chạy thực thi hàm \texttt{interpreter->Invoke()} đo đạc được thông qua hàm \texttt{esp\_timer\_get\_time()} dao động trong khoảng \textbf{2--5~ms}, đủ ngắn để không ảnh hưởng đến chu kỳ lập lịch của FreeRTOS.
 \end{itemize}
 
 \begin{figure}[H]
@@ -67,7 +67,7 @@ Kiểm thử hiệu năng mô hình TinyML phân loại bất thường trên ph
 \end{figure}
 
 \subsection{Video chạy thực nghiệm hệ thống thực tế}
-Để minh họa trực quan và sống động quá trình vận hành đồng thời của các tác vụ FreeRTOS, giao diện điều khiển Web Server cục bộ, luồng đẩy dữ liệu lên đám mây CoreIOT cũng như khả năng suy luận thời gian thực của mô hình TinyML trên bo mạch, nhóm đã thực hiện ghi hình quá trình chạy thực tế của hệ thống tại đường dẫn sau:
+Để minh họa trực quan kết quả bài tập lớn, nhóm đã thực hiện ghi hình quá trình chạy thực tế của hệ thống tại đường dẫn sau:
 \begin{itemize}
     \item \textbf{Đường dẫn video chạy thực nghiệm (Google Drive):} \url{https://drive.google.com/drive/folders/1CUfE8fknewNf8SvfNuVBJEifk1m3CWep?usp=sharing}
 \end{itemize}

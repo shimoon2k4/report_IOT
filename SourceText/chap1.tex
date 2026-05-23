@@ -1,28 +1,45 @@
 \section{Giới thiệu}
 
-\subsection{Lý do chọn đề tài}
-Trong sự phát triển không ngừng của Internet vạn vật (IoT), việc xây dựng các hệ thống nhúng đòi hỏi khả năng xử lý nhiều tác vụ đồng thời với độ trễ thấp và độ chính xác cao. Để đáp ứng yêu cầu khắt khe này, Hệ điều hành thời gian thực FreeRTOS trở thành một nền tảng không thể thiếu, cung cấp bộ lập lịch ưu tiên trưng dụng (Preemptive Scheduler), cơ chế đồng bộ hóa luồng chặt chẽ và các cấu trúc quản lý bộ nhớ an toàn. Việc ứng dụng FreeRTOS giúp tối ưu hóa tài nguyên phần cứng đồng thời quản lý hiệu quả các luồng dữ liệu liên tục từ cảm biến trong điều kiện đa tác vụ song song.
-
-Xuất phát từ nhu cầu nắm bắt các kỹ thuật lập trình nhúng nâng cao, nhóm đã quyết định thực hiện đề tài dựa trên việc sửa đổi và mở rộng dự án nền tảng YoloUNO\_PlatformIO - RTOS\_Project. Đề tài mang lại cơ hội thực hành trực tiếp các kỹ thuật đồng bộ hóa tác vụ bằng Semaphore nhị phân (Binary Semaphore) và Mutex, loại bỏ hoàn toàn việc sử dụng các biến toàn cục thiếu an toàn thông qua cấu trúc dữ liệu dùng chung \texttt{SystemData}. Đồng thời, dự án còn tích hợp các công nghệ hiện đại như Trí tuệ nhân tạo tại biên (TinyML) triển khai bằng thư viện TensorFlow Lite Micro và kết nối đám mây công nghiệp (CoreIOT) qua giao thức MQTT, tạo tiền đề vững chắc cho việc phát triển các sản phẩm IoT phức tạp trong thực tế.
-
-\subsection{Bối cảnh ứng dụng thực tế}
-Các hệ thống nhúng hiện đại không chỉ dừng lại ở việc thu thập dữ liệu đơn thuần mà đang tiến tới khả năng phân tích dữ liệu ngay tại nơi thu thập (Edge Computing). Trong bối cảnh đó, sự kết hợp giữa FreeRTOS và TinyML mở ra khả năng tạo ra các thiết bị thông minh có thể nhận diện môi trường, phát hiện bất thường và phản hồi tức thì mà không cần phụ thuộc hoàn toàn vào máy chủ trung tâm.
-
-Mô hình dự án này phản ánh trực tiếp cấu trúc của một hệ thống IoT công nghiệp cỡ nhỏ: từ lớp cảm nhận (thu thập nhiệt độ, độ ẩm qua cảm biến DHT20), lớp xử lý cục bộ (giao diện Web AP với WebSocket, xử lý TinyML trên Tensor Arena tĩnh, cảnh báo qua màn hình LCD 1602 và đèn LED/NeoPixel WS2812B onboard), cho đến lớp mạng và đám mây (truyền dữ liệu viễn trắc lên nền tảng CoreIOT thông qua thư viện ThingsBoard MQTT). Những kiến thức và kỹ năng từ dự án này có thể áp dụng trực tiếp vào việc thiết kế các hệ thống nhà thông minh (Smart Home), trạm quan trắc nông nghiệp, hoặc thiết bị y tế đeo tay.
+Sự phát triển mạnh mẽ của Internet vạn vật (Internet of Things --- IoT) đặt ra yêu cầu ngày càng cao đối với các hệ thống nhúng về khả năng xử lý đa tác vụ, độ tin cậy theo thời gian thực và khả năng tích hợp với hạ tầng đám mây.
+Báo cáo này trình bày quá trình thiết kế, triển khai và đánh giá một hệ thống nhúng thời gian thực hoàn chỉnh trên nền tảng vi điều khiển ESP32-S3 (bo mạch Yolo UNO), sử dụng hệ điều hành thời gian thực FreeRTOS~\cite{freertos} làm nền tảng điều phối tác vụ.
+Dự án được xây dựng dựa trên mã nguồn gốc YoloUNO PlatformIO RTOS\_Project~\cite{yolouno} và mở rộng với các chức năng khác biệt ít nhất 30\% so với mã nguồn gốc, bao gồm kiến trúc đồng bộ hóa không có biến toàn cục, giao diện giám sát Web theo thời gian thực, suy luận máy học tại biên (TinyML) và tích hợp nền tảng đám mây CoreIOT~\cite{coreiot}.
 
 \subsection{Mục tiêu của hệ thống}
-Mục tiêu chính của đề tài là xây dựng một hệ thống giám sát và điều khiển thông minh trên vi điều khiển ESP32-S3 (bo mạch Yolo UNO), đảm bảo mã nguồn mới phải có chức năng khác biệt ít nhất 30\% so với mã nguồn gốc và hoàn toàn loại bỏ các biến toàn cục thiếu an toàn. Để đạt được điều này, hệ thống cần hoàn thành 6 mục tiêu cốt lõi sau:
+
+Mục tiêu tổng quát của đề tài là phát triển một hệ thống giám sát môi trường và điều khiển thiết bị ngoại vi hoàn chỉnh trên vi điều khiển ESP32-S3, đảm bảo toàn bộ việc chia sẻ dữ liệu giữa các tác vụ được thực hiện thông qua các cơ chế đồng bộ hóa của FreeRTOS (Mutex và Binary Semaphore) mà không sử dụng bất kỳ biến toàn cục nào.
+Cụ thể, hệ thống cần hoàn thành sáu nhiệm vụ độc lập nhưng được tích hợp chặt chẽ với nhau như sau:
 
 \begin{itemize}
-    \item \textbf{Kiến trúc đa tác vụ RTOS an toàn:} Thiết kế kiến trúc 6 tác vụ (Tasks) chạy song song dưới sự điều phối của FreeRTOS, chia sẻ tài nguyên an toàn thông qua cấu trúc dữ liệu dùng chung \texttt{SystemData} được bảo vệ bởi Mutex và Semaphore nhị phân, không sử dụng bất kỳ biến toàn cục nào.
-    \item \textbf{Cảnh báo ngoại vi cục bộ:} Quản lý trạng thái nhấp nháy của đèn LED onboard (GPIO 38) theo nhiệt độ (ít nhất 3 mức tần số khác nhau) và cấu hình màu sắc của LED NeoPixel WS2812B onboard theo độ ẩm (ít nhất 3 mức màu: Đỏ, Xanh lá, Xanh dương) thông qua Binary Semaphore đồng bộ, cùng với hiển thị ít nhất 3 trạng thái cảnh báo trên màn hình LCD 1602 I2C (Normal, Warning, Critical) bảo vệ bằng Mutex.
-    \item \textbf{Giao diện Web và điều khiển cục bộ:} Thiết lập ESP32-S3 làm điểm truy cập (Access Point) và triển khai máy chủ web không đồng bộ (\texttt{ESPAsyncWebServer}) kết hợp giao thức WebSocket (\texttt{/ws}) cho phép người dùng giám sát dữ liệu cảm biến thời gian thực và điều khiển ít nhất hai thiết bị ngoại vi qua giao diện WebUI được lưu trữ trên bộ nhớ Flash LittleFS.
-    \item \textbf{Triển khai TinyML tại biên:} Xây dựng bộ dữ liệu, huấn luyện và chuyển đổi mô hình mạng nơ-ron sang định dạng C-array nhúng vào chip, chạy suy luận thời gian thực bằng thư viện TensorFlow Lite Micro trên Tensor Arena tĩnh 8KB và đo lường độ chính xác (Accuracy, Precision, Recall) thông qua tập 50 mẫu kiểm thử khởi động.
-    \item \textbf{Tích hợp đám mây CoreIOT:} Cấu hình ESP32-S3 ở chế độ Trạm (STA Mode) để kết nối MQTT tới máy chủ CoreIOT, xuất bản thành công dữ liệu viễn trắc nhiệt độ/độ ẩm định kỳ và gửi thuộc tính định danh thiết bị (MAC Address) bằng mã xác thực (Device Token) hợp lệ.
-    \item \textbf{Quản lý cấu hình động:} Lưu trữ và tải thông tin kết nối Wi-Fi và đám mây từ tệp tin JSON \texttt{/info.dat} trên phân vùng LittleFS, tự động chuyển đổi giữa chế độ AP (cấu hình lần đầu) và chế độ STA (hoạt động bình thường).
+    \item \textbf{Nhiệm vụ 1: Đèn LED đơn nhấp nháy theo điều kiện nhiệt độ.}
+    Xác định lại chế độ nhấp nháy của đèn LED onboard (GPIO~38) để phản ứng với ít nhất ba khoảng nhiệt độ khác nhau, mỗi khoảng tương ứng với một tần số nhấp nháy riêng biệt.
+    Cơ chế Binary Semaphore (\texttt{xLedSemaphore}) được sử dụng để đồng bộ hóa giữa tác vụ đọc cảm biến và tác vụ điều khiển LED, đảm bảo tính nhất quán của dữ liệu nhiệt độ trong môi trường đa tác vụ.
+
+    \item \textbf{Nhiệm vụ 2: Điều khiển đèn LED NeoPixel theo độ ẩm.}
+    Thiết kế lại các mẫu màu của đèn NeoPixel WS2812B onboard (GPIO~18) để biểu thị ít nhất ba mức độ ẩm khác nhau, với sự tương quan rõ ràng giữa từng khoảng giá trị độ ẩm và màu sắc hiển thị tương ứng.
+    Kỹ thuật Binary Semaphore (\texttt{xNeoSemaphore}) được áp dụng để đồng bộ hóa quá trình cập nhật màu sắc giữa tác vụ cảm biến và tác vụ điều khiển NeoPixel.
+
+    \item \textbf{Nhiệm vụ 3: Giám sát nhiệt độ và độ ẩm qua màn hình LCD.}
+    Định nghĩa các điều kiện ngưỡng để tạo và giải phóng Mutex bảo vệ tài nguyên màn hình LCD 1602 I2C, hiển thị ít nhất ba trạng thái cảnh báo khác biệt (Normal, Warning, Critical) dựa trên giá trị đọc từ cảm biến DHT20~\cite{dht20}.
+    Nhiệm vụ này cũng yêu cầu loại bỏ hoàn toàn tất cả biến toàn cục trong toàn bộ dự án, thay thế bằng cấu trúc dữ liệu dùng chung \texttt{SystemData} được bảo vệ bởi Mutex (\texttt{xMutex}).
+
+    \item \textbf{Nhiệm vụ 4: Máy chủ Web ở chế độ điểm truy cập.}
+    Thiết kế lại giao diện máy chủ web nhúng (\texttt{ESPAsyncWebServer}~\cite{espassyncwebserver}) để nâng cao khả năng sử dụng, kết hợp giao thức WebSocket (\texttt{/ws}) cho phép cập nhật dữ liệu cảm biến theo thời gian thực mà không cần tải lại trang.
+    Giao diện phải bao gồm ít nhất hai nút điều khiển có nhãn rõ ràng để điều khiển độc lập hai thiết bị ngoại vi; toàn bộ tài nguyên giao diện được lưu trữ trên phân vùng LittleFS~\cite{littlefs} của bộ nhớ Flash.
+
+    \item \textbf{Nhiệm vụ 5: Triển khai TinyML và đánh giá độ chính xác.}
+    Mô tả tập dữ liệu huấn luyện bao gồm quá trình thu thập và gán nhãn dữ liệu, huấn luyện mạng nơ-ron phân loại và chuyển đổi sang định dạng C-array để nhúng trực tiếp vào chip.
+    Mô hình được thực thi bằng thư viện TensorFlow Lite Micro~\cite{tflitemicro} trên Tensor Arena tĩnh 8~kB, với quá trình đo lường và đánh giá độ chính xác nhận dạng (Accuracy, Precision, Recall) trên tập kiểm thử, kèm thảo luận về hiệu suất và giới hạn của mô hình khi chạy trên phần cứng thực.
+
+    \item \textbf{Nhiệm vụ 6: Xuất bản dữ liệu lên máy chủ đám mây CoreIOT.}
+    Cấu hình ESP32-S3 ở chế độ Trạm (STA Mode) để thiết lập kết nối MQTT đến máy chủ CoreIOT~\cite{coreiot}, định kỳ xuất bản dữ liệu viễn trắc nhiệt độ và độ ẩm cùng thuộc tính định danh thiết bị (địa chỉ MAC).
+    Thiết bị sử dụng mã xác thực (Device Token) hợp lệ khớp với thiết bị đã đăng ký trên nền tảng, tuân theo mẫu giải pháp chính thức của CoreIOT và thư viện ThingsBoard MQTT~\cite{thingsboard_mqtt}.
 \end{itemize}
 
 \subsection{Phạm vi và giới hạn}
-Dự án được triển khai toàn bộ trên nền tảng vi điều khiển ESP32-S3 (bo mạch Yolo UNO) bằng ngôn ngữ C/C++ thông qua plugin PlatformIO. Trong giới hạn của đề tài, cấu hình phần cứng của bo mạch được cố định ở chế độ 301B9 và 812H6.
 
-Về mặt phần cứng, hệ thống sử dụng cảm biến DHT20 kết nối qua giao thức I2C (SDA: GPIO 11, SCL: GPIO 12) để thu thập nhiệt độ và độ ẩm, cùng các thiết bị ngoại vi onboard gồm LED đơn (GPIO 38), NeoPixel WS2812B (GPIO 18) và màn hình LCD 1602 I2C. Về mặt kết nối, hệ thống giới hạn ở giao tiếp Wi-Fi 2.4GHz với một mạng nội bộ duy nhất. Quá trình huấn luyện mô hình TinyML sử dụng tập dữ liệu có quy mô nhỏ, phù hợp với dung lượng RAM tĩnh 8KB Tensor Arena của ESP32-S3, và nền tảng CoreIOT được sử dụng như giải pháp lưu trữ đám mây duy nhất thông qua thư viện ThingsBoard MQTT. Việc kiểm thử hệ thống được thực hiện trong môi trường phòng thí nghiệm (Lab), tập trung vào tính đúng đắn của logic đồng bộ hóa đa tác vụ RTOS thay vì tối ưu hóa cho điều kiện vận hành khắc nghiệt ngoài trời.
+Dự án được triển khai toàn bộ trên nền tảng vi điều khiển ESP32-S3 (bo mạch Yolo UNO) bằng ngôn ngữ C/C++ thông qua plugin PlatformIO~\cite{platformio}. Trong giới hạn của đề tài, cấu hình phần cứng của bo mạch được cố định ở chế độ 301B9 và 812H6.
+
+Về mặt phần cứng, hệ thống sử dụng cảm biến DHT20~\cite{dht20} kết nối qua giao thức I2C (SDA: GPIO~11, SCL: GPIO~12) để thu thập nhiệt độ và độ ẩm, cùng các thiết bị ngoại vi onboard gồm LED đơn (GPIO~38), NeoPixel WS2812B~\cite{ws2812b} (GPIO~18) và màn hình LCD 1602 I2C.
+Về mặt kết nối, hệ thống giới hạn ở giao tiếp Wi-Fi 2.4~GHz với một mạng nội bộ duy nhất.
+Quá trình huấn luyện mô hình TinyML sử dụng tập dữ liệu có quy mô nhỏ, phù hợp với dung lượng RAM tĩnh 8~kB Tensor Arena của ESP32-S3, và nền tảng CoreIOT được sử dụng như giải pháp lưu trữ đám mây duy nhất thông qua thư viện ThingsBoard MQTT~\cite{thingsboard_mqtt}.
+Việc kiểm thử hệ thống được thực hiện trong môi trường phòng thí nghiệm, tập trung vào tính đúng đắn của logic đồng bộ hóa đa tác vụ RTOS thay vì tối ưu hóa cho điều kiện vận hành khắc nghiệt ngoài trời.

@@ -1,12 +1,12 @@
 \section{Kết luận}
 
 \subsection{Những kết quả đạt được}
-Sau một quá trình nghiên cứu, thiết kế và hiện thực nghiêm túc, nhóm đã hoàn thành toàn vẹn các mục tiêu đề ra cho dự án nâng cấp hệ thống nhúng thời gian thực dựa trên repo gốc YoloUNO\_PlatformIO - RTOS\_Project. Hệ thống đã hiện thực thành công và vận hành ổn định trọn vẹn cả 6 nhiệm vụ cốt lõi, minh chứng cho một giải pháp IoT cận biên thông minh và đồng bộ đám mây:
+Sau một quá trình nghiên cứu, thiết kế và hiện thực nghiêm túc, nhóm đã hoàn thành các mục tiêu đề ra cho dự án mở rộng hệ thống nhúng thời gian thực từ YoloUNO\_PlatformIO - RTOS\_Project. Hệ thống vận hành ổn định với cả 6 nhiệm vụ:
 \begin{itemize}
-    \item \textbf{Về mặt lập trình hệ điều hành thời gian thực FreeRTOS:} Nhóm đã làm chủ và ứng dụng chuẩn xác các cơ chế đồng bộ hóa luồng phức tạp như Mutex (bảo vệ bus I2C cho LCD 1602 chống tranh chấp tài nguyên) và Semaphore nhị phân (đồng bộ hóa chu kỳ hoạt động của LED đơn và dải LED RGB NeoPixel theo dữ liệu đo cảm biến). Việc loại bỏ hoàn toàn 100\% các biến toàn cục giúp mã nguồn đạt độ an toàn dữ liệu cao, loại trừ tuyệt đối lỗi tranh chấp tài nguyên (Race Conditions).
-    \item \textbf{Về năng lực xử lý tại biên (Edge AI):} Mô hình trí tuệ nhân tạo nhúng TinyML đã được hiện thực thành công bằng thư viện TensorFlow Lite Micro, chạy suy luận thời gian thực trực tiếp trên phân vùng bộ nhớ tĩnh Tensor Arena của chip ESP32 S3, đưa ra kết quả phân loại trạng thái môi trường với độ chính xác thực nghiệm cao.
-    \item \textbf{Về hạ tầng kết nối cục bộ và truyền thông mây:} Giao diện Web Server ở chế độ Access Point được thiết kế lại hoàn toàn, cho phép tương tác trực quan và điều khiển độc lập hai thiết bị ngoại vi với độ trễ tối ưu. Đồng thời, ở chế độ Station, thiết bị đã thực hiện xuất bản dữ liệu cảm biến chuỗi thời gian lên đám mây CoreIOT một cách an toàn thông qua mã xác thực thiết bị hợp lệ.
-    \item \textbf{Tính đổi mới và tổ chức nhóm:} Toàn bộ hệ thống thể hiện mức độ cải tiến tính năng và logic mã nguồn vượt trội trên 30\% so với nền tảng ban đầu. Mã nguồn được quản lý phiên bản một cách có tổ chức, minh bạch và đóng góp đồng đều giữa các thành viên thông qua kho lưu trữ GitHub.
+    \item \textbf{FreeRTOS và đồng bộ hóa:} Nhóm đã triển khai Mutex bảo vệ bus I2C cho LCD và Binary Semaphore đồng bộ hóa chu kỳ LED theo dữ liệu cảm biến. Loại bỏ hoàn toàn biến toàn cục giúp giảm thiểu nguy cơ tranh chấp tài nguyên giữa các tác vụ.
+    \item \textbf{Edge AI:} Mô hình TinyML được triển khai bằng TensorFlow Lite Micro, suy luận trực tiếp trên Tensor Arena tĩnh 8~kB của ESP32-S3. Trên tập kiểm thử 50 mẫu, mô hình đạt Accuracy, Precision và Recall đều 100\%.
+    \item \textbf{Web Server và CoreIOT:} Giao diện Web Server ở AP Mode được thiết kế lại, cho phép điều khiển độc lập hai thiết bị ngoại vi qua WebSocket. Ở STA Mode, thiết bị xuất bản dữ liệu nhiệt độ/độ ẩm lên CoreIOT qua MQTT với Device Token hợp lệ.
+    \item \textbf{Tính đổi mới:} Hệ thống khác biệt trên 30\% so với mã nguồn gốc về tính năng và cấu trúc. Mã nguồn được quản lý trên GitHub với đóng góp từ các thành viên trong nhóm.
 \end{itemize}
 
 \subsection{Hạn chế và Hướng phát triển}
@@ -16,12 +16,12 @@ Bên cạnh những kết quả tích cực đã đạt được, hệ thống v
     \item Tập dữ liệu (Dataset) huấn luyện cho mô hình TinyML vẫn ở quy mô nhỏ, giới hạn ở một số kịch bản phân loại môi trường cơ bản, chưa bao quát hết các biến động phức tạp của điều kiện thực tế ngoài trời.
 \end{itemize}
 
-Để phát triển hệ thống thành một giải pháp thương mại hoàn chỉnh trong tương lai, nhóm đề xuất các hướng mở rộng cụ thể như sau:
+Nhóm đề xuất các hướng mở rộng cụ thể như sau:
 \begin{itemize}
-    \item \textbf{Nâng cấp phần cứng và cảm biến:} Thay thế các cảm biến hiện tại bằng các module cảm biến đạt chuẩn công nghiệp để tăng cường độ chính xác và độ bền vận hành $24/7$.
-    \item \textbf{Mở rộng mô hình học máy biên nâng cao:} Thu thập tập dữ liệu lớn hơn, huấn luyện các mạng nơ-ron học sâu đa lớp để tối ưu hóa tỷ lệ nhận dạng bất thường và dự báo sớm các nguy cơ sự cố môi trường.
+    \item \textbf{Nâng cấp cảm biến:} Thay thế các cảm biến hiện tại bằng các module phù hợp hơn cho môi trường vận hành liên tục.
+    \item \textbf{Mở rộng mô hình TinyML:} Thu thập tập dữ liệu đa dạng hơn và huấn luyện lại để cải thiện khả năng phát hiện bất thường trong điều kiện thực tế.
     \item \textbf{Tích hợp cơ chế điều khiển tự động phản hồi khẩn cấp:} Bổ sung tính năng tự động kích hoạt các hệ thống chấp hành công suất lớn như quạt hút khói, hệ thống phun sương hoặc còi báo động diện rộng ngay khi TinyML phát hiện trạng thái nguy cấp.
-    \item \textbf{Nâng cấp hạ tầng đám mây:} Triển khai và đưa máy chủ điều phối Flask lên các nền tảng điện toán đám mây độc lập (như AWS hoặc Google Cloud) nhằm nâng cao tính mở rộng, hỗ trợ quản lý tập trung mạng lưới gồm nhiều thiết bị ESP32 S3 hoạt động đồng thời.
+    \item \textbf{Nâng cấp hạ tầng đám mây:} Triển khai máy chủ Flask trên nền tảng đám mây (AWS, Google Cloud) để quản lý tập trung nhiều thiết bị ESP32-S3 đồng thời.
 \end{itemize}
 
 \subsection{Đường dẫn mã nguồn dự án (GitHub)}

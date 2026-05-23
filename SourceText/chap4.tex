@@ -1,7 +1,7 @@
 \section{Hiện thực hệ thống}
 
 \subsection{Kiến trúc Đa nhiệm FreeRTOS trên Yolo UNO}
-Hệ thống được thiết kế chạy trên một bo mạch Yolo UNO duy nhất với chip xử lý kép ESP32-S3. Để phân phối tài nguyên và chạy song song các khối chức năng, toàn bộ mã nguồn được hiện thực dưới dạng các tác vụ (Tasks) của hệ điều hành thời gian thực FreeRTOS. Tại hàm khởi tạo \texttt{setup()}, các tài nguyên đồng bộ bao gồm Mutex và các Semaphore nhị phân được khởi tạo trước khi phân phối vào từng tác vụ:
+Hệ thống được thiết kế chạy trên một bo mạch Yolo UNO duy nhất với chip xử lý kép ESP32-S3. Để phân phối tài nguyên và chạy song song các khối chức năng, toàn bộ mã nguồn được hiện thực dưới dạng các tác vụ của hệ điều hành thời gian thực FreeRTOS. Tại hàm khởi tạo \texttt{setup()}, các tài nguyên đồng bộ bao gồm Mutex và các Semaphore nhị phân được khởi tạo trước khi phân phối vào từng tác vụ:
 
 \begin{lstlisting}[language=C++]
 // Initialize SystemData resources
@@ -34,7 +34,7 @@ Sơ đồ cấu trúc dữ liệu \texttt{SystemData} chia sẻ giữa các tác
 \subsection{Hiện thực Khối cảnh báo và hiển thị ngoại vi}
 
 \subsubsection{Tác vụ điều khiển LED đơn (Task 1)}
-Tác vụ quản lý đèn LED đơn chỉ thị cảnh báo nhiệt độ (\texttt{led\_blinky}) được ghim trong một vòng lặp vô hạn. Tác vụ duy trì trạng thái chặn (\textit{Blocked State}) nhằm tiết kiệm tài nguyên CPU bằng cách chờ đợi tín hiệu từ tác vụ đo đạc thông qua \texttt{xLedSemaphore}:
+Tác vụ quản lý đèn LED đơn chỉ thị cảnh báo nhiệt độ (\texttt{led\_blinky}) được ghim trong một vòng lặp vô hạn. Tác vụ duy trì trạng thái chặn nhằm tiết kiệm tài nguyên CPU bằng cách chờ đợi tín hiệu từ tác vụ đo đạc thông qua \texttt{xLedSemaphore}:
 \begin{lstlisting}[language=C++]
 if (xSemaphoreTake(data->xLedSemaphore, portMAX_DELAY) == pdTRUE) {
     // Safely access temperature data using Mutex
@@ -165,8 +165,8 @@ void CORE_IOT_reconnect() {
 }
 \end{lstlisting}
 
-Khi kết nối được thiết lập, thiết bị lập tức gửi lên máy chủ địa chỉ MAC vật lý mặc định (truy xuất trực tiếp từ eFuse) và địa chỉ IP nội bộ làm các thuộc tính định danh duy nhất (\textit{Attributes}). Dữ liệu cảm biến nhiệt độ, độ ẩm được xuất bản định kỳ thành công dưới dạng dữ liệu viễn trắc (\textit{Telemetry}).
-Đồng thời, hệ thống triển khai mDNS cho phép người dùng truy cập giao diện Web Server thông qua tên miền cục bộ thân thiện \url{http://yolound.local} mà không cần ghi nhớ địa chỉ IP động của thiết bị.
+Khi kết nối được thiết lập, thiết bị lập tức gửi lên máy chủ địa chỉ MAC (lấy từ eFuse) và địa chỉ IP nội bộ làm các thuộc tính định danh (Attributes). Dữ liệu cảm biến nhiệt độ, độ ẩm được xuất bản định kỳ thành công dưới dạng dữ liệu Telemetry.
+Đồng thời, hệ thống triển khai mDNS cho phép người dùng truy cập giao diện Web Server thông qua tên miền cục bộ \url{http://yolound.local} mà không cần ghi nhớ địa chỉ IP động của thiết bị.
 
 \begin{figure}[H]
     \centering
@@ -193,7 +193,7 @@ alignas(16) static uint8_t tensor_arena[kTensorArenaSize];
 \end{lstlisting}
 
 \subsubsection{Kịch bản tự kiểm thử khi khởi động (Startup Test)}
-Để đảm bảo tính chính xác của mô hình trước khi đi vào vận hành thực tế, hàm \texttt{evaluate\_accuracy()} được gọi tự động khi khởi động. Hàm này nạp lần lượt 50 mẫu dữ liệu kiểm thử (định nghĩa tại \texttt{test\_dataset.h}) vào con trỏ tensor đầu vào của mô hình, chạy suy luận và tính toán ma trận nhầm lẫn (\textit{Confusion Matrix}) bao gồm các chỉ số Accuracy, Precision và Recall:
+Để đảm bảo tính chính xác của mô hình trước khi đi vào vận hành thực tế, hàm \texttt{evaluate\_accuracy()} được gọi tự động khi khởi động. Hàm này nạp lần lượt 50 mẫu dữ liệu kiểm thử (định nghĩa tại \texttt{test\_dataset.h}) vào con trỏ tensor đầu vào của mô hình, chạy suy luận và tính toán Confusion Matrix bao gồm các chỉ số Accuracy, Precision và Recall:
 \begin{lstlisting}[language=C++]
 float accuracy = ((float)correct_predictions / (float)TEST_SAMPLES_COUNT) * 100.0;
 float precision = 0.0;
@@ -207,7 +207,7 @@ if (true_positives + false_negatives > 0) {
 \end{lstlisting}
 
 \subsubsection{Tác vụ suy luận thời gian thực TinyML (Task 5)}
-Sau khi tự kiểm thử, tác vụ đi vào vòng lặp \texttt{tiny\_ml\_task} chính thức. Tác vụ định kỳ (5 giây một lần) truy xuất an toàn dữ liệu nhiệt độ và độ ẩm mới nhất từ cảm biến DHT20, chuyển đổi sang kiểu dữ liệu số thực \texttt{float32} và chạy suy luận trực tiếp để xác định Điểm bất thường (\textit{Anomaly Score}):
+Sau khi tự kiểm thử, tác vụ đi vào vòng lặp \texttt{tiny\_ml\_task} chính thức. Tác vụ định kỳ (5 giây một lần) truy xuất an toàn dữ liệu nhiệt độ và độ ẩm mới nhất từ cảm biến DHT20, chuyển đổi sang kiểu dữ liệu số thực \texttt{float32} và chạy suy luận trực tiếp để xác định Anomaly Score:
 \begin{lstlisting}[language=C++]
 input->data.f[0] = temp;
 input->data.f[1] = humi;
@@ -226,8 +226,8 @@ Lưu đồ thuật toán của tiến trình Startup Test tự động đánh gi
 \begin{itemize}
     \item Khi hàm \texttt{evaluate\_accuracy()} được kích hoạt, hệ thống khởi tạo các bộ đếm đánh giá ma trận nhầm lẫn gồm \texttt{TP}, \texttt{FP}, \texttt{TN}, \texttt{FN} và biến đếm số dự đoán chính xác \texttt{Correct} bằng 0.
     \item Tiếp theo, hệ thống khởi chạy một vòng lặp duyệt tuần tự qua 50 mẫu thử nghiệm tĩnh được định nghĩa sẵn trong tệp \texttt{test\_dataset.h}. Tại mỗi lượt lặp thứ $i$, hệ thống đọc dữ liệu nhiệt độ/độ ẩm tương ứng, nạp vào Tensor đầu vào và gọi bộ thông dịch TensorFlow Lite Micro thực thi suy luận biên (\texttt{Invoke()}). Kết quả đầu ra được phân lớp nhị phân dựa trên ngưỡng 0.5 để đưa ra dự đoán trạng thái bất thường (đoán là 1) hoặc bình thường (đoán là 0).
-    \item Sau khi có kết quả dự đoán, hệ thống so sánh với nhãn thực tế (\textit{ground truth}) để cập nhật ma trận nhầm lẫn và tăng biến đếm \texttt{Correct} nếu dự đoán trùng khớp với nhãn.
-    \item Sau khi kết thúc duyệt đủ 50 mẫu ($i \ge 50$), tiến trình thoát khỏi vòng lặp và thực hiện tính toán 3 chỉ số chất lượng chính: Độ chính xác (Accuracy), Độ tin cậy (Precision), và Độ nhạy (Recall), sau đó xuất kết quả tổng quan ra cổng Serial phục vụ quá trình tự động giám sát.
+    \item Sau khi có kết quả dự đoán, hệ thống so sánh với nhãn thực tế (ground truth) để cập nhật ma trận nhầm lẫn và tăng biến đếm \texttt{Correct} nếu dự đoán trùng khớp với nhãn.
+    \item Sau khi kết thúc duyệt đủ 50 mẫu ($i \ge 50$), tiến trình thoát khỏi vòng lặp và thực hiện tính toán 3 chỉ số chất lượng chính, sau đó xuất kết quả tổng quan ra cổng Serial phục vụ quá trình tự động giám sát.
 \end{itemize}
 
 \subsection{Hiện thực Khối quản lý cấu hình động bằng LittleFS}
@@ -251,6 +251,6 @@ void Load_info_File() {
 
 Khi khởi động:
 \begin{itemize}
-    \item Nếu file cấu hình không tồn tại hoặc rỗng, hệ thống sẽ tự động kích hoạt chế độ Điểm truy cập (\texttt{AP Mode}) để phát Wi-Fi nội bộ. Người dùng truy cập trang cấu hình trên trình duyệt để nhập SSID/Password WiFi mới và cấu hình token cho đám mây CoreIOT.
-    \item Khi nhận cấu hình từ WebSocket, hàm \texttt{Save\_info\_File()} sẽ tiến hành ghi đè JSON vào \texttt{/info.dat}, sau đó khởi động lại thiết bị (\texttt{ESP.restart()}) để chuyển sang chế độ Trạm (\texttt{STA Mode}) và kết nối lên CoreIOT.
+    \item Nếu file cấu hình không tồn tại hoặc rỗng, hệ thống sẽ tự động kích hoạt AP Mode để phát Wi-Fi nội bộ. Người dùng truy cập trang cấu hình trên trình duyệt để nhập SSID/Password WiFi mới và cấu hình token cho đám mây CoreIOT.
+    \item Khi nhận cấu hình từ WebSocket, hàm \texttt{Save\_info\_File()} sẽ tiến hành ghi đè JSON vào \texttt{/info.dat}, sau đó khởi động lại thiết bị (\texttt{ESP.restart()}) để chuyển sang STA Mode và kết nối lên CoreIOT.
 \end{itemize}
