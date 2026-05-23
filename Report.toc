@@ -1,0 +1,60 @@
+\contentsline {section}{\numberline {1}Giới thiệu}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Lý do chọn đề tài}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Bối cảnh ứng dụng thực tế}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Mục tiêu của hệ thống}{5}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Phạm vi và giới hạn}{5}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Cơ sở lý thuyết}{7}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Phần cứng}{7}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Bo mạch lập trình nhúng Yolo UNO và Vi điều khiển ESP32-S3}{7}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Cảm biến nhiệt độ và độ ẩm DHT20}{8}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Đèn LED đơn cảnh báo (Tích hợp onboard)}{10}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Đèn LED màu NeoPixel WS2812B (Tích hợp onboard)}{10}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Màn hình hiển thị LCD I2C}{11}{subsubsection.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.6}Giao thức truyền thông và kết nối}{13}{subsubsection.2.1.6}%
+\contentsline {subsection}{\numberline {2.2}FreeRTOS}{13}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Quản lý tác vụ (Task Management)}{13}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Cơ chế lập lịch thời gian thực}{14}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Giao tiếp và đồng bộ giữa các task}{14}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Quản lý bộ nhớ}{14}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Software Timer}{15}{subsubsection.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.6}Tiết kiệm năng lượng}{15}{subsubsection.2.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.7}Khả năng mở rộng và tương thích}{15}{subsubsection.2.2.7}%
+\contentsline {subsubsection}{\numberline {2.2.8}Các thư viện hỗ trợ IoT}{16}{subsubsection.2.2.8}%
+\contentsline {subsection}{\numberline {2.3}CoreIOT}{16}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Các chức năng chính của CoreIOT}{16}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Kiến trúc hệ thống}{16}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Đặc điểm nổi bật}{17}{subsubsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.4}TinyML}{17}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Đặc điểm của TinyML}{17}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Kiến trúc hoạt động của TinyML}{17}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}TensorFlow Lite Micro}{18}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Ứng dụng của TinyML trong IoT}{18}{subsubsection.2.4.4}%
+\contentsline {section}{\numberline {3}Thiết kế hệ thống}{19}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Tổng quan hệ thống}{19}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Khối hiển thị LED, NeoPixel và LCD (Cảnh báo cục bộ)}{21}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Khối Webserver + Điều khiển cục bộ (Task 4)}{22}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Khối CoreIOT + Kết nối mạng STA (Task 6)}{24}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Khối TinyML (Task 5)}{24}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Khối quản lý cấu hình và Định danh thiết bị (LittleFS)}{27}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Hiện thực hệ thống}{30}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Kiến trúc Đa nhiệm FreeRTOS trên Yolo UNO}{30}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Hiện thực Khối cảnh báo và hiển thị ngoại vi}{31}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Tác vụ điều khiển LED đơn (Task 1)}{31}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Tác vụ điều khiển NeoPixel (Task 2)}{32}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Tác vụ đo đạc cảm biến và hiển thị LCD (Task 3)}{33}{subsubsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.3}Hiện thực Khối Webserver và giao thức WebSocket}{35}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Hiện thực Khối kết nối đám mây CoreIOT và mDNS}{37}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Hiện thực Khối TinyML và Tự kiểm thử (Startup Test)}{39}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Kịch bản tự kiểm thử khi khởi động (Startup Test)}{39}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Tác vụ suy luận thời gian thực TinyML (Task 5)}{40}{subsubsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.6}Hiện thực Khối quản lý cấu hình động bằng LittleFS}{41}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Kết quả thực nghiệm}{43}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Webserver và Cảnh báo LED cục bộ}{43}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Đồng bộ dải màu LED NeoPixel và hiển thị LCD}{43}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Đẩy dữ liệu lên đám mây CoreIOT (MQTT)}{44}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Mô hình TinyML và Tự kiểm thử (Startup Test)}{45}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Video chạy thực nghiệm hệ thống thực tế}{46}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Kết luận}{48}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Những kết quả đạt được}{48}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Hạn chế và Hướng phát triển}{49}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Đường dẫn mã nguồn dự án (GitHub)}{50}{subsection.6.3}%

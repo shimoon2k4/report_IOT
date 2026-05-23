@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  23 MAY 2026 07:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  23 MAY 2026 07:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2037,4 +2037,352 @@ Package fancyhdr Warning: \headheight is too small (20.0pt):
 
 ]
 Overfull \hbox (31.18375pt too wide) in paragraph at lines 32--33
-\T5/cmtt/m/n/13 Adafruit_NeoPixel* pixel\T5/cmr/m/n/13 ), c¡c bi¸n l÷u trú thæng sè ^^_o ^^_¤c thíi gian thüc (\T5/cmtt/m/n/
+\T5/cmtt/m/n/13 Adafruit_NeoPixel* pixel\T5/cmr/m/n/13 ), c¡c bi¸n l÷u trú thæng sè ^^_o ^^_¤c thíi gian thüc (\T5/cmtt/m/n/13 temperature\T5/cmr/m/n/13 ,
+ []
+
+
+Overfull \hbox (29.52753pt too wide) in paragraph at lines 32--33
+\T5/cmtt/m/n/13 xNeoSemaphore\T5/cmr/m/n/13 ). C¡c t¡c vö ch§p h nh phö ^^_ëc lªp nh÷ \T5/cmtt/m/n/13 Task_LED_Blink\T5/cmr/m/n/13 , \T5/cmtt/m/n/13 Task_NEO_Blink\T5/cmr/m/n/13 ,
+ []
+
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 45.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[31 <./SourceImage/tos_system_data_diagram.png>]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 78.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[32]
+<SourceImage/peripheral_flowchart.png, id=598, 2826.56pt x 1541.76pt>
+File: SourceImage/peripheral_flowchart.png Graphic file (type png)
+<use SourceImage/peripheral_flowchart.png>
+Package pdftex.def Info: SourceImage/peripheral_flowchart.png  used on input line 97.
+(pdftex.def)             Requested size: 475.16095pt x 259.17859pt.
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 101.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[33]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 107.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[34 <./SourceImage/peripheral_flowchart.png>]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 132.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[35]
+<SourceImage/websocket_message_handling_flow.png, id=639, 4075.225pt x 5765.54pt>
+File: SourceImage/websocket_message_handling_flow.png Graphic file (type png)
+<use SourceImage/websocket_message_handling_flow.png>
+Package pdftex.def Info: SourceImage/websocket_message_handling_flow.png  used on input line 137.
+(pdftex.def)             Requested size: 285.09946pt x 403.27715pt.
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 144.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[36 <./SourceImage/websocket_message_handling_flow.png>]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 164.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[37]
+<SourceImage/cloud_sequence_diagram.png, id=666, 7397.6375pt x 4677.475pt>
+File: SourceImage/cloud_sequence_diagram.png Graphic file (type png)
+<use SourceImage/cloud_sequence_diagram.png>
+Package pdftex.def Info: SourceImage/cloud_sequence_diagram.png  used on input line 173.
+(pdftex.def)             Requested size: 380.1302pt x 240.31097pt.
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 183.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[38 <./SourceImage/cloud_sequence_diagram.png>]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 204.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[39]
+<SourceImage/tinyml_startup_flowchart.png, id=698, 246.6816pt x 246.6816pt>
+File: SourceImage/tinyml_startup_flowchart.png Graphic file (type png)
+<use SourceImage/tinyml_startup_flowchart.png>
+Package pdftex.def Info: SourceImage/tinyml_startup_flowchart.png  used on input line 220.
+(pdftex.def)             Requested size: 285.09946pt x 285.12701pt.
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 227.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[40 <./SourceImage/tinyml_startup_flowchart.png>]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 243.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[41])
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 4.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[42]
+\openout2 = `SourceText/chap5.aux'.
+
+ (./SourceText/chap5.tex
+<SourceImage/webUI1.png, id=743, 2055.68pt x 1165.35374pt>
+File: SourceImage/webUI1.png Graphic file (type png)
+<use SourceImage/webUI1.png>
+Package pdftex.def Info: SourceImage/webUI1.png  used on input line 14.
+(pdftex.def)             Requested size: 228.07521pt x 129.29178pt.
+<SourceImage/webUi2.png, id=744, 2055.68pt x 1119.18124pt>
+File: SourceImage/webUi2.png Graphic file (type png)
+<use SourceImage/webUi2.png>
+Package pdftex.def Info: SourceImage/webUi2.png  used on input line 20.
+(pdftex.def)             Requested size: 228.07521pt x 124.1691pt.
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 32.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[43
+
+
+
+]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 50.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[44 <./SourceImage/webUI1.png> <./SourceImage/webUi2.png>]
+<SourceImage/tinyML_KQ.png, id=757, 1213.53375pt x 1474.50874pt>
+File: SourceImage/tinyML_KQ.png Graphic file (type png)
+<use SourceImage/tinyML_KQ.png>
+Package pdftex.def Info: SourceImage/tinyML_KQ.png  used on input line 62.
+(pdftex.def)             Requested size: 380.1302pt x 461.88531pt.
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 66.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[45]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 71.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[46 <./SourceImage/tinyML_KQ.png>])
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 5.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[47]
+\openout2 = `SourceText/chap6.aux'.
+
+ (./SourceText/chap6.tex
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 10.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[48
+
+
+
+]
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 30.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[49])
+File: SourceImage/LogoBK.png Graphic file (type png)
+<use SourceImage/LogoBK.png>
+Package pdftex.def Info: SourceImage/LogoBK.png  used on input line 6.
+(pdftex.def)             Requested size: 24.75206pt x 24.75018pt.
+
+
+Package fancyhdr Warning: \headheight is too small (20.0pt): 
+(fancyhdr)                Make it at least 38.16585pt, for example:
+(fancyhdr)                \setlength{\headheight}{38.16585pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-18.16585pt}.
+
+[50])
+runsystem(latexminted cleantemp  --timestamp 20260523072028 4B1B4DC8CF38B3C64B1D657DA8F5AC8C)...executed safely (allowed).
+
+ 
+enddocument/afterlastpage (AED): lastpage setting LastPage.
+(./Report.aux (./0. BÃ¬a.aux) (./0. Danh sÃ¡ch thÃ nh viÃªn.aux) (./SourceText/chap1.aux) (./SourceText/chap2.aux) (./SourceText/chap3.aux) (./SourceText/chap4.aux) (./SourceText/chap5.aux) (./SourceText/chap6.aux))
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-14>
+ ***********
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.0pt have occurred.
+
+Package rerunfilecheck Info: File `Report.out' has not changed.
+(rerunfilecheck)             Checksum: FD7EC52885EA3AE8823E60205AB3C0A5;14630.
+ ) 
+Here is how much of TeX's memory you used:
+ 45458 strings out of 467538
+ 960599 string characters out of 5423725
+ 1958011 words of memory out of 5000000
+ 73322 multiletter control sequences out of 15000+600000
+ 651642 words of font info for 91 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 108i,25n,131p,1740b,2719s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vnbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vnr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vnr7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vnti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vntt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/vntex/vnr/vntt12.pfb>
+Output written on Report.pdf (52 pages, 15024664 bytes).
+PDF statistics:
+ 903 PDF objects out of 1000 (max. 8388607)
+ 786 compressed objects within 8 object streams
+ 264 named destinations out of 1000 (max. 500000)
+ 583 words of extra memory for PDF output out of 10000 (max. 10000000)
+
