@@ -32,7 +32,7 @@
             citecolor = blue,
             anchorcolor = blue]{hyperref}
 \usepackage{enumitem}
-\usepackage[left=2.3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry} 
+\usepackage[left=2.3cm,right=2cm,top=2.5cm,bottom=2.5cm,headheight=39pt]{geometry} 
 \usepackage{scrextend}
 \usepackage{algorithm2e}
 \usepackage{etoolbox}
@@ -61,7 +61,7 @@
 \renewcommand{\subsubsectionautorefname}{Phần}
 \renewcommand{\itemautorefname}{}
 \renewcommand{\algorithmautorefname}{Thuật toán}
-\setlength{\headheight}{20pt}
+\setlength{\headheight}{39pt}
 \captionsetup{labelfont={bf}}
 \pagestyle{fancy}
 
@@ -198,6 +198,7 @@
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \begin{document}
+\hypersetup{pageanchor=false}
 %\begin{comment}
 \setlength{\textfloatsep}{1.5pt} % Đặt khoảng cách giữa các figure
 
@@ -218,6 +219,7 @@
 % \listoftables
 % }
 % \newpage
+\hypersetup{pageanchor=true}
 \tableofcontents
 \newpage 
 
