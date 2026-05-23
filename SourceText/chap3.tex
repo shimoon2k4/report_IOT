@@ -1,9 +1,9 @@
 \section{Thiết kế hệ thống}
 
 \subsection{Tổng quan hệ thống}
-Để đáp ứng yêu cầu xử lý thời gian thực, đồng bộ hóa luồng dữ liệu phức tạp từ cảm biến và tối ưu hóa tài nguyên phần cứng, hệ thống được thiết kế dựa trên kiến trúc **đa tác vụ (Multi-tasking)** chạy trên nền tảng **Hệ điều hành thời gian thực FreeRTOS** nhúng trong vi điều khiển lõi kép **ESP32-S3 (Yolo UNO)**. 
+Để đáp ứng yêu cầu xử lý thời gian thực, đồng bộ hóa luồng dữ liệu phức tạp từ cảm biến và tối ưu hóa tài nguyên phần cứng, hệ thống được thiết kế dựa trên kiến trúc \textbf{đa tác vụ (Multi-tasking)} chạy trên nền tảng \textbf{Hệ điều hành thời gian thực FreeRTOS} nhúng trong vi điều khiển lõi kép \textbf{ESP32-S3 (Yolo UNO)}.
 
-Toàn bộ các tác vụ xử lý bao gồm đọc dữ liệu cảm biến, hiển thị LCD, điều khiển LED/NeoPixel cảnh báo, thực thi mô hình trí tuệ nhân tạo biên (TinyML), chạy máy chủ Web Server cục bộ và đồng bộ dữ liệu đám mây (CoreIOT) được thiết kế chạy song song độc lập. Các tác vụ này tương tác và chia sẻ tài nguyên một cách an toàn thông qua các cơ chế đồng bộ hóa luồng của FreeRTOS như **Mutex** và **Semaphore**, giúp loại bỏ hoàn toàn các biến toàn cục không an toàn.
+Toàn bộ các tác vụ xử lý bao gồm đọc dữ liệu cảm biến, hiển thị LCD, điều khiển LED/NeoPixel cảnh báo, thực thi mô hình trí tuệ nhân tạo biên (TinyML), chạy máy chủ Web Server cục bộ và đồng bộ dữ liệu đám mây (CoreIOT) được thiết kế chạy song song độc lập. Các tác vụ này tương tác và chia sẻ tài nguyên một cách an toàn thông qua các cơ chế đồng bộ hóa luồng của FreeRTOS như \textbf{Mutex} và \textbf{Semaphore}, giúp loại bỏ hoàn toàn các biến toàn cục không an toàn.
 
 Sơ đồ kết nối phần cứng chi tiết của hệ thống được thể hiện trong Hình \ref{fig:sys_block_diagram}. 
 
@@ -30,9 +30,9 @@ Kiến trúc này thể hiện việc hệ thống phân chia công việc thàn
 \subsection{Khối hiển thị LED, NeoPixel và LCD (Cảnh báo cục bộ)}
 Khối chức năng hiển thị và cảnh báo cục bộ chịu trách nhiệm tương tác trực quan với người dùng tại chỗ. Để tránh xung đột tài nguyên và đồng bộ hóa các chu kỳ hiển thị theo chu kỳ đọc cảm biến, hệ thống thiết kế các tác vụ riêng biệt được đồng bộ hóa thời gian thực:
 \begin{itemize}
-    \item \textbf{Tác vụ điều khiển LED đơn (Task 1):} Tác vụ này duy trì trạng thái chặn (Blocked State) để tiết kiệm CPU và chỉ thức dậy khi nhận được tín hiệu giải phóng từ **Binary Semaphore** (`xLedSemaphore`) từ tác vụ đọc cảm biến. Tác vụ sẽ kiểm tra giá trị nhiệt độ hiện tại để điều khiển tần số nhấp nháy của LED theo 3 dải cảnh báo riêng biệt (an toàn, cảnh báo, khẩn cấp).
-    \item \textbf{Tác vụ điều khiển LED NeoPixel (Task 2):} Tương tự như LED đơn, tác vụ điều khiển màu sắc của dải LED RGB NeoPixel được đồng bộ qua **Binary Semaphore** (`xNeoSemaphore`). Tác vụ ánh xạ mức độ ẩm nhận được thành 3 màu sắc đại diện (Đỏ - khô hạn, Xanh lá - lý tưởng, Xanh dương - ẩm ướt) mà không gây trễ giao diện.
-    \item \textbf{Tác vụ hiển thị LCD I2C (Task 3):} Tác vụ này kiểm soát màn hình LCD 1602 giao tiếp qua I2C. Để ngăn ngừa hiện tượng tranh chấp đường truyền bus I2C (Race Condition) khi ghi thông số cảm biến, hệ thống sử dụng **Mutex** (`xMutex`) để độc chiếm tài nguyên bus I2C một cách an toàn. Màn hình tự động cập nhật nhiệt độ, độ ẩm thực tế và thay đổi linh hoạt giữa 3 trạng thái giao diện: ``NORMAL'', ``WARNING'', và ``CRITICAL''.
+    \item \textbf{Tác vụ điều khiển LED đơn (Task 1):} Tác vụ này duy trì trạng thái chặn (Blocked State) để tiết kiệm CPU và chỉ thức dậy khi nhận được tín hiệu giải phóng từ \textbf{Binary Semaphore} (\texttt{xLedSemaphore}) từ tác vụ đọc cảm biến. Tác vụ sẽ kiểm tra giá trị nhiệt độ hiện tại để điều khiển tần số nhấp nháy của LED theo 3 dải cảnh báo riêng biệt (an toàn, cảnh báo, khẩn cấp).
+    \item \textbf{Tác vụ điều khiển LED NeoPixel (Task 2):} Tương tự như LED đơn, tác vụ điều khiển màu sắc của dải LED RGB NeoPixel được đồng bộ qua \textbf{Binary Semaphore} (\texttt{xNeoSemaphore}). Tác vụ ánh xạ mức độ ẩm nhận được thành 3 màu sắc đại diện (Đỏ - khô hạn, Xanh lá - lý tưởng, Xanh dương - ẩm ướt) mà không gây trễ giao diện.
+    \item \textbf{Tác vụ hiển thị LCD I2C (Task 3):} Tác vụ này kiểm soát màn hình LCD 1602 giao tiếp qua I2C. Để ngăn ngừa hiện tượng tranh chấp đường truyền bus I2C (Race Condition) khi ghi thông số cảm biến, hệ thống sử dụng \textbf{Mutex} (\texttt{xMutex}) để độc chiếm tài nguyên bus I2C một cách an toàn. Màn hình tự động cập nhật nhiệt độ, độ ẩm thực tế và thay đổi linh hoạt giữa 3 trạng thái giao diện: ``NORMAL'', ``WARNING'', và ``CRITICAL''.
 \end{itemize}
 
 \begin{figure}[H]
@@ -47,8 +47,8 @@ Cơ chế đồng bộ hóa chi tiết giữa ba tác vụ hiển thị và cả
 \subsection{Khối Webserver + Điều khiển cục bộ (Task 4)}
 Khối truyền thông điều khiển cục bộ cung cấp một máy chủ Web Server tích hợp trực tiếp trên chip ESP32-S3, cho phép người dùng giám sát và cấu hình thiết bị từ xa qua mạng nội bộ:
 \begin{itemize}
-    \item \textbf{Máy chủ Web Asynchronous:} Sử dụng thư viện máy chủ không đồng bộ (`ESPAsyncWebServer`), giúp phản hồi nhanh các yêu cầu HTTP mà không gây nghẽn các tác vụ RTOS khác. Toàn bộ các tệp tin giao diện WebUI được lưu trữ trực tiếp trong bộ nhớ Flash của chip dưới dạng hệ thống tệp tin tĩnh.
-    \item \textbf{Giao tiếp WebSocket:} Thay vì sử dụng HTTP REST API truyền thống, hệ thống thiết kế kênh truyền thông song công **WebSocket** (`AsyncWebSocket`) để truyền dữ liệu cảm biến dạng JSON theo thời gian thực tới giao diện người dùng và tiếp nhận tức thời lệnh điều khiển cơ cấu chấp hành (bật/tắt các cổng GPIO liên kết với LED/Relay).
+    \item \textbf{Máy chủ Web Asynchronous:} Sử dụng thư viện máy chủ không đồng bộ (\texttt{ESPAsyncWebServer}), giúp phản hồi nhanh các yêu cầu HTTP mà không gây nghẽn các tác vụ RTOS khác. Toàn bộ các tệp tin giao diện WebUI được lưu trữ trực tiếp trong bộ nhớ Flash của chip dưới dạng hệ thống tệp tin tĩnh.
+    \item \textbf{Giao tiếp WebSocket:} Thay vì sử dụng HTTP REST API truyền thống, hệ thống thiết kế kênh truyền thông song công \textbf{WebSocket} (\texttt{AsyncWebSocket}) để truyền dữ liệu cảm biến dạng JSON theo thời gian thực tới giao diện người dùng và tiếp nhận tức thời lệnh điều khiển cơ cấu chấp hành (bật/tắt các cổng GPIO liên kết với LED/Relay).
 \end{itemize}
 
 \begin{figure}[H]

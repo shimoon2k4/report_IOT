@@ -53,7 +53,9 @@ Khi hoạt động ở chế độ Station (\texttt{STA Mode}), thiết bị t�
 \subsection{Mô hình TinyML và Tự kiểm thử (Startup Test)}
 Kiểm thử hiệu năng mô hình TinyML phân loại bất thường trên phần cứng ESP32-S3 mang lại kết quả tối ưu:
 \begin{itemize}
-    \item \textbf{Kết quả tự kiểm thử lúc khởi động:} Quá trình chạy thử 50 mẫu tĩnh tại startup hoàn tất trơn tru. Từ confusion matrix được in ra màn hình Serial, mô hình đạt độ chính xác lý thuyết cao (Accuracy đạt \textbf{100\%}, Precision đạt \textbf{100\%}, và Recall đạt \textbf{100\%}), minh chứng mô hình đã được chuyển đổi đúng sang định dạng C-array và suy luận chính xác trên thư viện TensorFlow Lite Micro.
+    \item \textbf{Kết quả tự kiểm thử lúc khởi động:} Quá trình chạy thử 50 mẫu tĩnh tại startup hoàn tất trơn tru. Từ confusion matrix được in ra màn hình Serial, mô hình đạt Accuracy \textbf{100\%}, Precision \textbf{100\%}, và Recall \textbf{100\%} trên tập kiểm thử tĩnh 50 mẫu, minh chứng mô hình đã được chuyển đổi đúng sang định dạng C-array và suy luận chính xác trên thư viện TensorFlow Lite Micro.
+
+\textbf{Thảo luận về hiệu suất mô hình:} Kết quả 100\% trên tập 50 mẫu phản ánh rằng mô hình hoạt động nhất quán trong miền dữ liệu đã được huấn luyện và rằng quá trình chuyển đổi sang định dạng \texttt{float32} C-array không gây mất mát thông tin trọng số. Tuy nhiên, cần lưu ý rằng tập kiểm thử có quy mô nhỏ và được thu thập trong điều kiện phòng thí nghiệm có kiểm soát; do đó, kết quả này không nhất thiết đại diện cho độ chính xác thực tế trong môi trường ngoài trời có điều kiện nhiệt độ và độ ẩm biến động phức tạp hơn. Để đánh giá toàn diện hơn, cần mở rộng tập dữ liệu kiểm thử với các mẫu từ nhiều kịch bản môi trường khác nhau trong các công việc tiếp theo.
     \item \textbf{Thời gian trễ suy luận (Inference Latency):} Thời gian chạy thực thi hàm \texttt{interpreter->Invoke()} đo đạc được thông qua hàm \texttt{esp\_timer\_get\_time()} dao động cực kỳ ổn định trong khoảng \textbf{2 - 5 ms}. Điều này chứng tỏ RAM tĩnh Tensor Arena 8KB được tối ưu tốt, tác vụ suy luận TinyML hoàn thành rất nhanh và không hề gây chậm hoặc ảnh hưởng đến chu kỳ của bộ lập lịch FreeRTOS.
 \end{itemize}
 
