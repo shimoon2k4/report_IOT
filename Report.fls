@@ -432,6 +432,9 @@ INPUT 0. Bìa.aux
 INPUT ./0. Danh sách thành viên.aux
 INPUT ./0. Danh sách thành viên.aux
 INPUT 0. Danh sách thành viên.aux
+INPUT ./SourceText/abbrev.aux
+INPUT ./SourceText/abbrev.aux
+INPUT SourceText/abbrev.aux
 INPUT ./SourceText/chap1.aux
 INPUT ./SourceText/chap1.aux
 INPUT SourceText/chap1.aux
@@ -519,6 +522,16 @@ INPUT c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm0600.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnbx12.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnti12.tfm
 INPUT c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT ./0. Danh sách thành viên.tex
+OUTPUT 0. Danh sách thành viên.aux
+INPUT ./0. Danh sách thành viên.tex
+INPUT ./0. Danh sách thành viên.tex
+INPUT ./0. Danh sách thành viên.tex
+INPUT 0. Danh sách thành viên.tex
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnr17.tfm
+INPUT ./Report.toc
+INPUT ./Report.toc
+INPUT Report.toc
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmi9.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy9.tfm
@@ -542,34 +555,29 @@ INPUT c:/texlive/2025/texmf-dist/tex/latex/vntex/t5cmtt.fd
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vntt12.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnr10.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vntt10.tfm
-INPUT ./0. Danh sách thành viên.tex
-OUTPUT 0. Danh sách thành viên.aux
-INPUT ./0. Danh sách thành viên.tex
-INPUT ./0. Danh sách thành viên.tex
-INPUT ./0. Danh sách thành viên.tex
-INPUT 0. Danh sách thành viên.tex
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnr17.tfm
-INPUT ./Report.toc
-INPUT ./Report.toc
-INPUT Report.toc
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 OUTPUT Report.toc
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceText/toc.tex
 INPUT ./SourceText/toc.tex
 INPUT ./SourceText/toc.tex
 INPUT ./SourceText/toc.tex
 INPUT SourceText/toc.tex
+INPUT ./SourceText/abbrev.tex
+INPUT ./SourceText/abbrev.tex
+INPUT ./SourceImage/LogoBK.png
+INPUT ./SourceImage/LogoBK.png
+INPUT ./SourceImage/LogoBK.png
+INPUT ./SourceImage/LogoBK.png
+OUTPUT SourceText/abbrev.aux
+INPUT ./SourceImage/LogoBK.png
+INPUT ./SourceText/abbrev.tex
+INPUT ./SourceText/abbrev.tex
+INPUT SourceText/abbrev.tex
+INPUT ./SourceImage/LogoBK.png
+INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceText/chap1.tex
 INPUT ./SourceText/chap1.tex
 OUTPUT SourceText/chap1.aux
@@ -579,16 +587,7 @@ INPUT SourceText/chap1.tex
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnr17.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnbx12.tfm
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT c:/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceText/chap2.tex
@@ -603,9 +602,6 @@ INPUT ./SourceImage/yolo-uno.png
 INPUT ./SourceImage/yolo-uno.png
 INPUT ./SourceImage/yolo-uno.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/DHT20 (1).png
 INPUT ./SourceImage/DHT20 (1).png
 INPUT ./SourceImage/DHT20 (1).png
@@ -613,46 +609,11 @@ INPUT ./SourceImage/DHT20 (1).png
 INPUT ./SourceImage/DHT20 (1).png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LCD.png
 INPUT ./SourceImage/LCD.png
 INPUT ./SourceImage/LCD.png
 INPUT ./SourceImage/LCD.png
 INPUT ./SourceImage/LCD.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
@@ -672,17 +633,11 @@ INPUT ./SourceImage/sys_block_diagram.png
 INPUT ./SourceImage/sys_block_diagram.png
 INPUT ./SourceImage/sys_block_diagram.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/arch_rtos.png
 INPUT ./SourceImage/arch_rtos.png
 INPUT ./SourceImage/arch_rtos.png
 INPUT ./SourceImage/arch_rtos.png
 INPUT ./SourceImage/arch_rtos.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/sync_diagram.png
 INPUT ./SourceImage/sync_diagram.png
@@ -691,24 +646,11 @@ INPUT ./SourceImage/sync_diagram.png
 INPUT ./SourceImage/sync_diagram.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/web_communication_diagram.png
 INPUT ./SourceImage/web_communication_diagram.png
 INPUT ./SourceImage/web_communication_diagram.png
 INPUT ./SourceImage/web_communication_diagram.png
 INPUT ./SourceImage/web_communication_diagram.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/tinyml_pipeline_diagram.png
 INPUT ./SourceImage/tinyml_pipeline_diagram.png
@@ -717,26 +659,11 @@ INPUT ./SourceImage/tinyml_pipeline_diagram.png
 INPUT ./SourceImage/tinyml_pipeline_diagram.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/config_flowchart.png
 INPUT ./SourceImage/config_flowchart.png
 INPUT ./SourceImage/config_flowchart.png
 INPUT ./SourceImage/config_flowchart.png
 INPUT ./SourceImage/config_flowchart.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
@@ -764,44 +691,20 @@ INPUT ./SourceImage/tos_system_data_diagram.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/peripheral_flowchart.png
 INPUT ./SourceImage/peripheral_flowchart.png
 INPUT ./SourceImage/peripheral_flowchart.png
 INPUT ./SourceImage/peripheral_flowchart.png
 INPUT ./SourceImage/peripheral_flowchart.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/vntex/vnr/vnr9.tfm
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/websocket_message_handling_flow.png
 INPUT ./SourceImage/websocket_message_handling_flow.png
 INPUT ./SourceImage/websocket_message_handling_flow.png
 INPUT ./SourceImage/websocket_message_handling_flow.png
 INPUT ./SourceImage/websocket_message_handling_flow.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/cloud_sequence_diagram.png
@@ -811,26 +714,11 @@ INPUT ./SourceImage/cloud_sequence_diagram.png
 INPUT ./SourceImage/cloud_sequence_diagram.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/tinyml_startup_flowchart.png
 INPUT ./SourceImage/tinyml_startup_flowchart.png
 INPUT ./SourceImage/tinyml_startup_flowchart.png
 INPUT ./SourceImage/tinyml_startup_flowchart.png
 INPUT ./SourceImage/tinyml_startup_flowchart.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
@@ -852,27 +740,11 @@ INPUT ./SourceImage/webUi2.png
 INPUT ./SourceImage/webUi2.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/tinyML_KQ.png
 INPUT ./SourceImage/tinyML_KQ.png
 INPUT ./SourceImage/tinyML_KQ.png
 INPUT ./SourceImage/tinyML_KQ.png
 INPUT ./SourceImage/tinyML_KQ.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceText/chap6.tex
@@ -883,28 +755,12 @@ INPUT ./SourceText/chap6.tex
 INPUT SourceText/chap6.tex
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceText/chap8.tex
 INPUT ./SourceText/chap8.tex
 OUTPUT SourceText/chap8.aux
 INPUT ./SourceText/chap8.tex
 INPUT ./SourceText/chap8.tex
 INPUT SourceText/chap8.tex
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
-INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT ./SourceImage/LogoBK.png
 INPUT Report.aux
@@ -914,6 +770,9 @@ INPUT 0. Bìa.aux
 INPUT ./0. Danh sách thành viên.aux
 INPUT ./0. Danh sách thành viên.aux
 INPUT 0. Danh sách thành viên.aux
+INPUT ./SourceText/abbrev.aux
+INPUT ./SourceText/abbrev.aux
+INPUT SourceText/abbrev.aux
 INPUT ./SourceText/chap1.aux
 INPUT ./SourceText/chap1.aux
 INPUT SourceText/chap1.aux
